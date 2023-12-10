@@ -1,0 +1,16 @@
+{% extends 'users/base.html' %} {% block body %}
+<h1>Homepage for users app</h1>
+{% for class in yoga_class %}
+<h1>{{class.title}}</h1>
+<h4>class_type: {{class.class_type}}</h4>
+<h4>classroom_equipment:{{class.classroom_equipment}}</h4>
+<h4>description:{{class.description}}</h4>
+<h4>enrolled_students:{{class.enrolled_students}}</h4>
+<h4>enrollment:{{class.enrollment}}</h4>
+<h4>id:{{class.id}}</h4>
+<h4>interaction:{{class.interaction}}</h4>
+<h4>location:{{class.location}}</h4>
+<h4>material:{{class.material}}</h4>
+<h4>Date:{{class.date}}</h4>
+<h4>Time:{{class.time}}</h4>
+{% endfor %} {% endblock %}
