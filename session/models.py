@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from users.models import Profile  # Assuming a user profile model already exists
+from django.conf import settings
 
 class ClassType(models.Model):
     name = models.CharField(max_length=50)
@@ -21,4 +22,4 @@ class YogaClass(models.Model):
 
 
     def __str__(self):
-        return f"{self.title} - {self.schedule_time}"
+        return f"{self.title} - {self.date} - {self.time}"

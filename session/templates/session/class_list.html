@@ -1,0 +1,65 @@
+{% extends 'users/base.html' %} {% load static %} {% block body %}
+<div class="flex mt-5 p-10 justify-center">
+  <h1 class="text-3xl font-normal mb-2 text-gray-500">
+    Homepage for users app
+  </h1>
+</div>
+<img src="{{class_tutor.profile_photo.url}}" alt="" />
+<div class="grid mx-60 p-10 grid-cols-1">
+  {% for class in classes %}
+  <a href="#">
+    <div class="mx-2 my-2 font-bold"><span>Tutor: {{class.title}}</span></div>
+    <h4>class_type: {{class.class_type}}</h4>
+    <div class="user-container">
+      <img src="{{class_tutor.profile_photo.url}}" alt="" />
+      <div class="mx-2 my-2 font-bold"><span>Tutor: {{class.tutor}}</span></div>
+    </div>
+    <h4>classroom_equipment:{{class.classroom_equipment}}</h4>
+    <h4>description:{{class.description}}</h4>
+    <h4>enrolled_students:{{class.enrolled_students}}</h4>
+    <div class="user-container">
+      <h4>enrollment:{{class.enrollment}}</h4>
+    </div>
+    <h4>id:{{class.id}}</h4>
+    <h4>interaction:{{class.interaction}}</h4>
+    <h4>location:{{class.location}}</h4>
+    <h4>material:{{class.material}}</h4>
+    <h4>Date:{{class.date}}</h4>
+    <h4>Time:{{class.time}}</h4>
+
+    <div class="px-6 py-4">
+      <div class="icon-container flex gap-3">
+        <img
+          class="w-5 h-5"
+          src="{% static 'users/images/like.png' %}"
+          alt="https://www.iconfinder.com/icons/8666647/heart_icon"
+        />
+        <img
+          class="w-5 h-5"
+          src="{% static 'users/images/comment.png' %}"
+          alt="https://www.iconfinder.com/icons/8664929/comment_chat_message_icon"
+        />
+        <img
+          class="w-5 h-5"
+          src="{% static 'users/images/share.png' %}"
+          alt="https://www.iconfinder.com/icons/9026047/share_network_icon"
+        />
+      </div>
+    </div>
+    {% endfor %}
+    <br /><br />
+    {% for interaction in class_interaction %}
+    <div>
+      <div class="font-bold text-xl mb-2">
+        Class: {{interaction.yoga_class}}
+      </div>
+      <p class="text-gray-700 text-base">Comment: {{interaction.comment}}</p>
+      <h2>user: {{interaction.user}}</h2>
+      <h2>liked_by_user: {{interaction.liked_by_user}}</h2>
+      <h2>timestamp: {{interaction.timestamp}}</h2>
+      <h2>interaction_date: {{interaction.interaction_date}}</h2>
+    </div>
+    {% endfor %}
+  </a>
+</div>
+{% endblock %}
