@@ -2,14 +2,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import YogaClass, ClassType
 from users.models import Profile
 from interactions.models import Interaction
-from .forms import SessionForm, EnrollmentForm
+from .forms import SessionForm, EnrollmentForm, CommentForm
 from django.contrib.auth.decorators import login_required
 
 def class_list(request):
     classes = YogaClass.objects.all()
     class_tutor = Profile.objects.all()
     class_interaction = Interaction.objects.all()
-    return render(request, 'session/class_list.html', {'classes': classes, 'class_tutor':class_tutor, 'class_interaction':class_interaction})
+    logged_user = request.user
+    return render(request, 'session/class_list.html', {'classes': classes, 'class_tutor':class_tutor, 'class_interaction':class_interaction, 'logged_user':logged_user})
 
 def class_detail(request, class_id):
     yoga_class = YogaClass.objects.get(id=class_id)
@@ -36,6 +37,7 @@ def create_class(request):
         form = SessionForm()
     return render(request, 'session/create_class.html', {'form': form})
 
+@login_required
 def enroll_class(request, class_id):
     enroll_class = get_object_or_404(YogaClass, id=class_id)
     if request.method == 'POST':
@@ -54,6 +56,29 @@ def schedule_class(request, class_id):
     # Logic for scheduling the class
     return render(request, 'session/schedule_class.html', {'schedule_class': schedule_class})
 
+@login_required
 def dashboard(request):
+
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        new_comment = comment_form.save(commit=False)
+        session_id = request.POST.get('session_id')
+        session = get_object_or_404(Interaction, id=session_id)
+        new_comment.post = session
+        new_comment.save()
+    else:
+        comment_form = CommentForm()
+
     dashboard = YogaClass.objects.all()
-    return render(request, 'session/dashboard.html', {'dashboard':dashboard})
+    interaction = Interaction.objects.all()
+    logged_user = request.user
+    return render(request, 'session/dashboard.html', {'dashboard':dashboard, 'interaction':interaction,'logged_user':logged_user, 'comment_form': comment_form})
+
+def session_like(request):
+    session_id = request.POST.get('session_id')
+    session = get_object_or_404(Interaction, id=session_id )
+    if session.liked_by_user.filter(id=request.user.id).exists():
+        session.liked_by_user.remove(request.user)
+    else:
+        session.liked_by_user.add(request.user)
+    return redirect('dashboard')

@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm
 from django.contrib.auth.decorators import login_required
@@ -10,6 +10,7 @@ from session.models import YogaClass
 # user login request
 
 def user_login(request):
+    current_user = request.user
     if request.method == "POST":           #if the request method is post, this will give the access to the login form
         form = LoginForm(request.POST)
         if form.is_valid():                #check if the input is clean data
@@ -25,15 +26,14 @@ def user_login(request):
                     Tutor.objects.get_or_create(user_profile=user.profile)
                     # Redirect to tutor profile setup or dashboard
                     return HttpResponse("User authenticated as a tutor and logged in")
-                return HttpResponse("user authenticated and logged in")
+                return render(request, 'session/class_list.html')
             else:
-                return HttpResponse('Invalid credentials')
+                return render(request, 'users/invalid_credentials.html')  
     
     else:
         form = LoginForm()
     return render(request, 'users/login.html', {'form':form})
 
-@login_required
 def index(request):
     current_user = request.user
     #yoga_class = YogaClass.objects.filter(user=current_user)
@@ -55,13 +55,26 @@ def register(request):
 
 @login_required
 def edit(request):
+    loggedin_user = request.user
+    edit_profile = Profile.objects.filter(user=loggedin_user)
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user, data=request.POST)
         profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+            return redirect('profile')
     else:
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
-    return render(request, 'users/edit.html', {'user_form':user_form, 'profile_form':profile_form})
+    return render(request, 'users/edit.html', {'user_form':user_form, 'profile_form':profile_form, 'edit_profile':edit_profile})
+
+@login_required
+def profile(request):
+    loggedin_user = request.user
+    profile = Profile.objects.filter(user=loggedin_user)
+    return render(request, 'users/profile.html', {'profile': profile})
+
+
+def invalid(request):
+    return render(request, 'user/invalid_credentials.html')

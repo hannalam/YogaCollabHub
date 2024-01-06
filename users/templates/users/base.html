@@ -3,14 +3,19 @@
   <head>
     <link rel="stylesheet" href="{% static 'users/styles.css' %}" />
     <link rel="stylesheet" href="{% static 'users/style.css' %}" />
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
-    <nav class="shadow-lg">
-      <div class="px-4 mx-auto">
+    <nav class="shadow-lg h-12">
+      <div class="px-6 mx-4 py-2">
         <div class="flex justify-between">
           <!--Logo : https://www.iconfinder.com/icons/753880/pillates_exercise_fitness_pilates_strength_yoga_icon-->
           <div>
-            <a class="flex" href="">
+            <a class="flex" href="{% url 'index'%}">
               <img
                 class="h-8 w-8 mr-2"
                 src="{% static 'users/images/logo.png' %}"
@@ -23,10 +28,21 @@
           </div>
           <!--Items-->
           <div class="space-x-1">
-            <a class="py-4 px-2 text-gray-500">Classes</a>
-            <a class="py-4 px-2 text-gray-500">Dashboard</a>
-            <a class="py-4 px-2 text-gray-500">Profile</a>
+            <a class="py-4 px-2 text-gray-500" href="{% url 'class_list'%}"
+              >Classes</a
+            >
             {% if request.user.is_authenticated %}
+
+            <a class="py-4 px-2 text-gray-500" href="{% url 'create_class'%}"
+              >Create Class</a
+            >
+
+            <a class="py-4 px-2 text-gray-500" href="{% url 'dashboard'%}"
+              >Dashboard</a
+            >
+            <a class="py-4 px-2 text-gray-500" href="{% url 'profile'%}"
+              >Profile</a
+            >
             <a class="py-4 px-2 text-gray-500" href="{% url 'logout' %}"
               >Logout</a
             >

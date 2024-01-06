@@ -1,5 +1,5 @@
 from django import forms
-from .models import Interaction
+from .models import Interaction, Comment
 
 class InteractionForm(forms.ModelForm):
     class Meta:

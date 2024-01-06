@@ -8,6 +8,7 @@ urlpatterns = [
     path('<int:class_id>/', views.class_detail, name='class_detail'),
     path('add_class_type/', views.add_class_type, name='add_class_type'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('like', views.session_like, name='like'),
 
 ]
 

@@ -1,5 +1,6 @@
 from django import forms
 from .models import YogaClass
+from interactions.models import Comment
 
 class SessionForm(forms.ModelForm):
     class Meta:
@@ -10,3 +11,8 @@ class EnrollmentForm(forms.ModelForm):
     class Meta:
         model = YogaClass
         fields = ['enrolled_students']
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('body','posted_by',)
