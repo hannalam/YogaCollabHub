@@ -1,10 +1,9 @@
-{% extends 'users/base_user.html' %} {% load static %} {% block body %}
+{% extends 'users/base_tutor.html' %} {% load static %} {% block body %}
 <div class="flex mt-5 p-10 justify-center">
   <div class="py-5 mx-10 justify-center">
-    <h1 class="text-3xl font-normal mb-2 text-gray-500">Profile</h1>
+    <h1 class="text-3xl font-normal mb-2 text-gray-500">Tutor Profile</h1>
 
-    {% for profile in profile %}
-
+    {% for profile in tutorProfile %}
     <div class="py-5 mb-2">
       <img
         class="h-20 rounded-full"
@@ -46,9 +45,23 @@
         >Location: {{profile.location}}</label
       >
     </div>
+    {% endfor %} {% for cert in tutorCert %}
+    <div class="py-2 mb-2">
+      <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+        >Teaching certificate:
+      </label>
+      <img
+        class="h-20"
+        src="{{cert.teaching_certificate.url}}"
+        alt="Teaching Certificate"
+      />
+    </div>
     {% endfor %}
+
     <div class="user-container mb-2 my-5">
-      <a class="bg-blue-700 text-white my-5 px-5 py-2" href="{% url 'edit'%}"
+      <a
+        class="bg-blue-700 text-white my-5 px-5 py-2"
+        href="{% url 'tutorEdit'%}"
         >Edit Profile</a
       >
     </div>

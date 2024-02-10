@@ -1,7 +1,5 @@
 {% extends 'users/base.html' %} {% block body %}
-<div class="flex">
-  <h1 class="text-2xl m-10">😊User Register</h1>
-</div>
+<h1 class="text-2xl m-10">😊Tutor Register</h1>
 <div class="container py-5">
   <form
     method="POST"
@@ -9,11 +7,13 @@
   >
     {% csrf_token %}
     <div class="mb-2">
-      <label class="block text-gray-700 text-sm font-bold mb-2">Username</label>
+      <label class="block text-gray-700 text-sm font-bold mb-2"
+        >Tutor Username</label
+      >
       <div
         class="shadow text-gray-700 appearance-none border rounded py-2 px-3 mr-10"
       >
-        {{user_form.username}}
+        {{tutor_form.username}}
       </div>
     </div>
     <div class="mb-2">
@@ -21,7 +21,7 @@
       <div
         class="shadow text-gray-700 appearance-none border rounded py-2 px-3 mr-10"
       >
-        {{user_form.email}}
+        {{tutor_form.email}}
       </div>
     </div>
     <div class="mb-2">
@@ -31,7 +31,7 @@
       <div
         class="shadow text-gray-700 appearance-none border rounded py-2 px-3 mr-10"
       >
-        {{user_form.first_name}}
+        {{tutor_form.first_name}}
       </div>
     </div>
     <div class="mb-2">
@@ -39,7 +39,7 @@
       <div
         class="shadow text-gray-700 appearance-none border rounded py-2 px-3 mr-10"
       >
-        {{user_form.password}}
+        {{tutor_form.password}}
       </div>
     </div>
     <div class="mb-2">
@@ -49,30 +49,8 @@
       <div
         class="shadow text-gray-700 appearance-none border rounded py-2 px-3 mr-10"
       >
-        {{user_form.password2}}
+        {{tutor_form.password2}}
       </div>
-    </div>
-
-    <div class="mt-2">
-      <label class="inline-flex items-center">
-        <input
-          type="radio"
-          class="form-radio"
-          name="accountType"
-          value="student"
-        />
-        <span class="ml-2">Student</span>
-      </label>
-      <label class="inline-flex items-center ml-6">
-        <input
-          type="radio"
-          class="form-radio"
-          name="accountType"
-          value="tutor"
-        />
-        <span class="ml-2">Tutor</span>
-      </label>
-      {{ user_form.user }}
     </div>
 
     <button class="text-white bg-green-500 px-5 py-2 my-5" type="submit">

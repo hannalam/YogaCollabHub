@@ -1,0 +1,197 @@
+{% load static %}
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="{% static 'users/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'users/style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Reference for the sidenav -->
+
+    <!-- Create a beautiful hover-triggered expandable sidebar with simple HTML, CSS, and Javascript,  https://medium.com/@9cv9official/create-a-beautiful-hover-triggered-expandable-sidebar-with-simple-html-css-and-javascript-9f5f80a908d1 -->
+
+    <!-- Sidebar with navbar, https://flowbite.com/docs/components/sidebar/-->
+
+    <!-- Icon, https://materializecss.com/icons.html-->
+
+    <style>
+      body {
+        font-family: "Lato", sans-serif;
+      }
+
+      .sidebar {
+        height: 100%;
+        width: 85px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+        white-space: nowrap;
+      }
+
+      .sidebar a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+      }
+
+      .sidebar a:hover {
+        color: #f1f1f1;
+      }
+
+      .sidebar .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+      }
+
+      .material-icons,
+      .icon-text {
+        vertical-align: middle;
+      }
+
+      .material-icons {
+        padding-bottom: 3px;
+      }
+
+      #main {
+        transition: margin-left 0.5s;
+        padding: 16px;
+        margin-left: 100px;
+      }
+      /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+
+      @media screen and (max-height: 450px) {
+        .sidebar {
+          padding-top: 15px;
+        }
+        .sidebar a {
+          font-size: 18px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="shadow-lg h-12">
+      <div class="px-6 mx-4 py-2">
+        <div class="flex justify-between">
+          <!--Logo : https://www.iconfinder.com/icons/753880/pillates_exercise_fitness_pilates_strength_yoga_icon-->
+          <div></div>
+          <!--Items-->
+          <div class="flex">
+            <div class="mr-10">
+              <a class="flex" href="{% url 'class_list'%}">
+                <img
+                  class="h-8 w-8 mr-2"
+                  src="{% static 'users/images/logo.png' %}"
+                  alt=""
+                />
+                <span class="font-semibold text-lg text-gray-500"
+                  >Yoga Collab Hub</span
+                >
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div
+      id="mySidebar"
+      class="sidebar"
+      onmouseover="toggleSidebar()"
+      onmouseout="toggleSidebar()"
+    >
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'class_list_tutor'%}">
+        <i class="material-icons">class</i>
+        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Classes</span>
+      </a>
+
+      <a href="{% url 'create_class'%}">
+        <i class="material-icons">folder_special</i>
+        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Create Class</span>
+      </a>
+
+      <a href="{% url 'dashboard_tutor'%}">
+        <i class="material-icons">dashboard</i>
+        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Dashboard</span>
+      </a>
+
+      <a href="{% url 'tutorProfile'%}">
+        <i class="material-icons">account_box</i>
+        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Tutor Profile</span>
+      </a>
+
+      <a href="#">
+        <i class="material-icons">inbox</i>
+        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Inbox</span>
+        <span
+          class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300"
+          >3</span
+        >
+      </a>
+
+      <a href="{% url 'logout' %}">
+        <i class="material-icons">exit_to_app</i>
+        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Logout</span>
+      </a>
+      {% else %}
+      <a href="#">
+        <i class="material-icons">info</i>
+        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;About</span>
+      </a>
+
+      <a href="{% url 'tutorRegister'%}">
+        <i class="material-icons">create</i>
+        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Sign In</span>
+      </a>
+
+      <a href="{% url 'tutor_login' %}">
+        <i class="material-icons">present_to_all</i>
+        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Login</span>
+      </a>
+      {% endif %}
+    </div>
+
+    <div id="main"></div>
+
+    <script>
+      var mini = true;
+
+      function toggleSidebar() {
+        if (mini) {
+          console.log("opening sidebar");
+          document.getElementById("mySidebar").style.width = "250px";
+          document.getElementById("main").style.marginLeft = "250px";
+          this.mini = false;
+        } else {
+          console.log("closing sidebar");
+          document.getElementById("mySidebar").style.width = "85px";
+          document.getElementById("main").style.marginLeft = "85px";
+          this.mini = true;
+        }
+      }
+    </script>
+    {% block body %} {% endblock %}
+  </body>
+</html>

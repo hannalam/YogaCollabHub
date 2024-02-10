@@ -12,6 +12,13 @@ def class_list(request):
     logged_user = request.user
     return render(request, 'session/class_list.html', {'classes': classes, 'class_tutor':class_tutor, 'class_interaction':class_interaction, 'logged_user':logged_user})
 
+def class_list_tutor(request):
+    classes_t = YogaClass.objects.all()
+    class_tutor_t = Profile.objects.all()
+    class_interaction_t = Interaction.objects.all()
+    logged_user = request.user
+    return render(request, 'session/class_list_tutor.html', {'classes_t': classes_t, 'class_tutor_t':class_tutor_t, 'class_interaction_t':class_interaction_t, 'logged_user':logged_user})
+
 def class_detail(request, class_id):
     yoga_class = YogaClass.objects.get(id=class_id)
     return render(request, 'session/class_detail.html', {'yoga_class': yoga_class})
@@ -73,6 +80,24 @@ def dashboard(request):
     interaction = Interaction.objects.all()
     logged_user = request.user
     return render(request, 'session/dashboard.html', {'dashboard':dashboard, 'interaction':interaction,'logged_user':logged_user, 'comment_form': comment_form})
+
+@login_required
+def dashboard_tutor(request):
+
+    if request.method == 'POST':
+        comment_form_t = CommentForm(data=request.POST)
+        new_comment = comment_form_t.save(commit=False)
+        session_id = request.POST.get('session_id')
+        session = get_object_or_404(Interaction, id=session_id)
+        new_comment.post = session
+        new_comment.save()
+    else:
+        comment_form_t = CommentForm()
+
+    dashboard_t = YogaClass.objects.all()
+    interaction_t = Interaction.objects.all()
+    logged_user = request.user
+    return render(request, 'session/dashboard_tutor.html', {'dashboard_t':dashboard_t, 'interaction_t':interaction_t,'logged_user':logged_user, 'comment_form_t': comment_form_t})
 
 def session_like(request):
     session_id = request.POST.get('session_id')

@@ -5,12 +5,20 @@
       <div class="block text-grey-700 text-m mb-2 mx-3 py-10">
         Share your yoga experience
       </div>
-      <div >
+      <div div class=" mb-2 py-5 justify-center">
       <a class="bg-blue-700 rounded text-white px-5 my-5 py-2" href="{% url 'login'%}"
-        >Login</a
+        >User Login</a
       >
       <a class="bg-blue-700 rounded text-white m-20 px-5 my-5 py-2" href="{% url 'register'%}"
-        >Sign up</a
+        >User Sign up</a
+      >
+      </div>
+      <div div class="py-5 justify-center">
+      <a class="bg-green-700 rounded text-white px-5 my-5 py-2" href="{% url 'tutor_login'%}"
+        >Tutor Login</a
+      >
+      <a class="bg-green-700 rounded text-white m-20 px-5 my-5 py-2" href="{% url 'tutorRegister'%}"
+        >Tutor Sign up</a
       >
       </div>
     </div>

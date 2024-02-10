@@ -1,13 +1,13 @@
-{% extends 'users/base_user.html' %} {% load static %} {% block body %}
+{% extends 'users/base_tutor.html' %} {% load static %} {% block body %}
 <div class="flex mt-5 p-10 justify-center">
   <h1 class="text-3xl font-normal mb-2 text-gray-500">
     Classes
   </h1>
 </div>
-<img src="{{class_tutor.profile_photo.url}}" alt="" />
+<img src="{{class_tutor_t.profile_photo.url}}" alt="" />
 <div class="grid mx-60 p-10 grid-cols-1 ">
   <a>
-  {% for class in classes %}
+  {% for class in classes_t %}
   <br href="#">
   <div class="bg-gray-300 p-5">
     <div class="mx-2 my-2 font-bold"><span>Tutor: {{class.title}}</span></div>

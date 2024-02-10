@@ -1,10 +1,10 @@
-{% extends 'users/base_user.html' %} {% load static %} {% block body %}
+{% extends 'users/base_tutor.html' %} {% load static %} {% block body %}
 <div class="flex mt-5 p-10 justify-center">
   <h1 class="text-3xl font-normal mb-2 text-gray-500">Dashboard</h1>
 </div>
-<img src="{{class_tutor.profile_photo.url}}" alt="" />
+<img src="{{class_tutor_t.profile_photo.url}}" alt="" />
 <div class="grid mx-60 p-10 grid-cols-1">
-  {% for class in dashboard %}
+  {% for class in dashboard_t %}
   <a href="#">
     <div class="mx-2 my-2 font-bold"><span>Tutor: {{class.title}}</span></div>
     <h4>class_type: {{class.class_type}}</h4>
@@ -27,7 +27,7 @@
 
     {% endfor %}
     <br /><br />
-    {% for interaction in interaction %}
+    {% for interaction in interaction_t %}
     <div>
       <div class="font-bold text-xl mb-2">
         Class: {{interaction.yoga_class}}
@@ -69,16 +69,16 @@
             />
           </a>
         </div>
-        {% if interaction.liked_by_user.count < 1 %} {% elif
-        interaction.liked_by_user.count == 1 %} {{
-        interaction.liked_by_user.first }} Likes this {% elif
-        interaction.liked_by_user.count > 1 %} {{interaction.liked_by_user.first
-        }} & {{ interaction.liked_by_user.count }} Likes this {% endif %}
+        {% if interaction_t.liked_by_user.count < 1 %} {% elif
+        interaction_t.liked_by_user.count == 1 %} {{
+        interaction_t.liked_by_user.first }} Likes this {% elif
+        interaction_t.liked_by_user.count > 1 %} {{interaction_t.liked_by_user.first
+        }} & {{ interaction_t.liked_by_user.count }} Likes this {% endif %}
       </div>
     </div>
     <div>
       <p class="text-gray-700 text-base">
-        {% for comment in interaction.session_comment.all %}
+        {% for comment in interaction_t.session_comment.all %}
         <b>{{comment.posted_by}}</b>:{{comment.body}} {% endfor %}
       </p>
     </div>
@@ -87,7 +87,7 @@
         {% csrf_token %}
         <div class="flex">
         <div class="border rounded mr-10 text-green-700">
-          {{ comment_form.body }}
+          {{ comment_form_t.body }}
         </div>
 
         <input

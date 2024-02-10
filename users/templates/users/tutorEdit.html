@@ -1,0 +1,123 @@
+{% extends 'users/base_tutor.html' %} {% block body %}
+<div class="flex mt-5 p-10 justify-center">
+  <div class="py-5 mx-10 justify-center">
+    <div class="flex user-container mb-2 my-5">
+      <h2 class="text-3xl mb-2 text-gray-500 m-8 font-bold">Edit profile 🫡</h2>
+      <a class="bg-blue-700 text-white m-10 px-2" href="{% url 'tutorProfile'%}"
+        >Back to Tutor Profile</a
+      >
+    </div>
+    {% for profile in tutor_edit_profile %}
+    <div class="py-5 mb-2">
+      <img
+        class="h-20 rounded-full"
+        src="{{profile.profile_photo.url}}"
+        alt=""
+      />
+    </div>
+    {% endfor %}
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="mb-2">
+        <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+          >First name:</label
+        >
+        <div
+          class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+        >
+          {{tutor_user_form.first_name}}
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+          >Last name:</label
+        >
+        <div
+          class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+        >
+          {{tutor_user_form.last_name}}
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+          >Email Address:</label
+        >
+        <div
+          class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+        >
+          {{tutor_user_form.email}}
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+          >Change photo:</label
+        >
+        <div
+          class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+        >
+          {{tutor_profile_form.profile_photo}}
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+          >Bio:</label
+        >
+        <div
+          class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+        >
+          {{tutor_profile_form.bio}}
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+          >Location:</label
+        >
+        <div
+          class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+        >
+          {{tutor_profile_form.location}}
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+          >Change teaching certificate:</label
+        >
+        <div
+          class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+        >
+          {{cert_form.teaching_certificate}}
+        </div>
+        {% for cert in cert_form %}
+        <img
+          class="h-20 rounded-full"
+          src="{{cert.teaching_certificate.url}}"
+          alt=""
+        />
+      </div>
+      {% endfor %}
+
+      <button type="submit" class="bg-green-500 text-white my-5 px-5 py-2">
+        Submit
+      </button>
+    </form>
+
+    <div class="flex user-container mb-2 my-5">
+      <h2 class="text-2xl m-10 font-bold">Change password 🗝️</h2>
+
+      <a
+        class="bg-blue-700 text-white m-10 px-2"
+        href="{% url 'password_change'%}"
+        >Click to the change password page</a
+      >
+    </div>
+  </div>
+  {% endblock %}
+</div>
