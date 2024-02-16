@@ -1,0 +1,34 @@
+{% extends 'users/base_tutor.html' %} {% load static %} {% block body %}
+<div class="flex mt-5 p-5 justify-center">
+  <h1 class="text-3xl font-normal mb-2 text-gray-500">Classes</h1>
+</div>
+<div class="grid mx-60 p-5 grid-cols-1">
+  <div class="bg-gray-300 p-5">
+    <div class="mx-2 my-2 font-bold">
+      <span>{{yoga_class.title}}</span>
+      {% for class in class_tutor %}
+      <img src="{{class.profile_photo.url}}" alt="" />
+      {% endfor %}
+    </div>
+    <h4>class_type: {{yoga_class.class_type}}</h4>
+    <div class="user-container">
+      <img src="{{class_tutor.profile_photo.url}}" alt="" />
+      <div class="mx-2 my-2 font-bold">
+        <span>Tutor: {{yoga_class.tutor}}</span>
+      </div>
+    </div>
+    <h4>classroom_equipment:{{yoga_class.classroom_equipment}}</h4>
+    <h4>description:{{yoga_class.description}}</h4>
+    <h4>enrolled_students:{{yoga_class.enrolled_students}}</h4>
+    <div class="user-container">
+      <h4>enrollment:{{yoga_class.enrollment}}</h4>
+    </div>
+    <h4>interaction:{{yoga_class.interaction}}</h4>
+    <h4>location:{{yoga_class.location}}</h4>
+    <h4>material:{{yoga_class.material}}</h4>
+    <h4>Date:{{yoga_class.date}}</h4>
+    <h4>Time:{{yoga_class.time}}</h4>
+  </div>
+</div>
+
+{% endblock %}

@@ -6,6 +6,7 @@
 <div class="grid mx-60 p-10 grid-cols-1">
   {% for class in dashboard_t %}
   <a href="#">
+    <div class="grid mx-60 p-10 grid-cols-1 ">
     <div class="mx-2 my-2 font-bold"><span>Tutor: {{class.title}}</span></div>
     <h4>class_type: {{class.class_type}}</h4>
     <div class="user-container">
@@ -25,6 +26,15 @@
     <h4>Date:{{class.date}}</h4>
     <h4>Time:{{class.time}}</h4>
 
+    <div class="user-container mb-2 my-5">
+      <a
+        class="bg-blue-700 text-white my-5 px-5 py-2"
+        href="{% url 'edit_class'%}"
+        >Edit Class</a
+      >
+      <a class="bg-red-700 text-white my-5 px-5 py-2"href="{% url 'delete_class' class.id %}">Delete</a>
+    </div>
+</div>
     {% endfor %}
     <br /><br />
     {% for interaction in interaction_t %}

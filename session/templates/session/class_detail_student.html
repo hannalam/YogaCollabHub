@@ -1,12 +1,37 @@
 {% extends 'users/base_user.html' %} {% load static %} {% block body %}
-<div class="flex mt-5 p-10 justify-center">
-  <h1 class="text-3xl font-normal mb-2 text-gray-500">Dashboard</h1>
+<div class="flex mt-5 p-5 justify-center">
+  <h1 class="text-3xl font-normal mb-2 text-gray-500">Classes</h1>
 </div>
-<img src="{{class_tutor.profile_photo.url}}" alt="" />
-<div class="grid mx-60 p-10 grid-cols-1">
+<div class="grid mx-60 p-5 grid-cols-1">
+  <div class="bg-gray-300 p-5">
+    <div class="mx-2 my-2 font-bold">
+      <span>{{yoga_class_detail.title}}</span>
+      {% for class in class_tutor %}
+      <img src="{{class.profile_photo.url}}" alt="" />
+      {% endfor %}
+    </div>
+    <h4>class_type: {{yoga_class_detail.class_type}}</h4>
+    <div class="user-container">
+      <img src="{{class_tutor.profile_photo.url}}" alt="" />
+      <div class="mx-2 my-2 font-bold">
+        <span>Tutor: {{yoga_class_detail.tutor}}</span>
+      </div>
+    </div>
+    <h4>classroom_equipment:{{yoga_class_detail.classroom_equipment}}</h4>
+    <h4>description:{{yoga_class_detail.description}}</h4>
+    <h4>enrolled_students:{{yoga_class_detail.enrolled_students}}</h4>
+    <div class="user-container">
+      <h4>enrollment:{{yoga_class_detail.enrollment}}</h4>
+    </div>
+    <h4>interaction:{{yoga_class_detail.interaction}}</h4>
+    <h4>location:{{yoga_class_detail.location}}</h4>
+    <h4>material:{{yoga_class_detail.material}}</h4>
+    <h4>Date:{{yoga_class_detail.date}}</h4>
+    <h4>Time:{{yoga_class_detail.time}}</h4>
+
 
     <br /><br />
-    {% for interaction in interaction %}
+    {% for interaction in interactions %}
     <div>
       <div class="font-bold text-xl mb-2">
         Class: {{interaction.yoga_class}}
@@ -88,9 +113,29 @@
       </form>
     </div>
     </div>
+{% endfor %}
 
-    {% endfor %}
-  </a>
+<!-- Display Interactions -->
+<h3>Interactions</h3>
+<ul>
+  {% for interaction in interaction %}
+  <li>
+    <p>User: {{ interaction.user }}</p>
+    <p>Date: {{ interaction.date }}</p>
+    <!-- Display other interaction details as needed -->
+  </li>
+  {% endfor %}
+</ul>
+
+<!-- Comment Form -->
+<h3>Add Comment</h3>
+<form method="post">
+  {% csrf_token %}
+  {{ comment_form.as_p }}
+  <input type="hidden" name="session_id" value="{{ yoga_class_detail.id }}">
+  <button type="submit">Submit</button>
+</form>
+
 </div>
 <script type="text/javascript">
   window.CSRF_TOKEN = "{{ csrf_token }}";
@@ -105,4 +150,7 @@
     window.location.href = "http://127.0.0.1:8000/session/dashboard";
   });
 </script>
+  </div>
+</div>
+
 {% endblock %}

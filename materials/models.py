@@ -1,6 +1,6 @@
 from django.db import models
 from session.models import YogaClass  # Assuming a YogaClass model already exists
-from users.models import Profile
+from users.models import Profile, Tutor
 from django.utils import timezone
 
 def material_upload_path(instance, filename):
@@ -17,7 +17,7 @@ class Material(models.Model):
     ]
     material_type = models.CharField(max_length=50, choices=UPLOAD_TYPES)
     content = models.TextField()
-    uploaded_by = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    uploaded_by = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     upload_datetime = models.DateTimeField(auto_now_add=True)
     material_file = models.FileField(upload_to=material_upload_path)
 

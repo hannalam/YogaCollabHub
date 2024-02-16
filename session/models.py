@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from users.models import Profile  # Assuming a user profile model already exists
+from users.models import Profile, Tutor  # Assuming a user profile model already exists
 from django.conf import settings
 
 class ClassType(models.Model):
@@ -12,7 +12,7 @@ class ClassType(models.Model):
 class YogaClass(models.Model):
     title = models.CharField(max_length=100)
     class_type = models.ForeignKey(ClassType, on_delete=models.SET_NULL, null=True)
-    tutor = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.now)
     time = models.TimeField(default=timezone.now)
     classroom_equipment = models.TextField()

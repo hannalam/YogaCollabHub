@@ -1,27 +1,84 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import YogaClass, ClassType
-from users.models import Profile
+from users.models import Profile, Tutor
 from interactions.models import Interaction
-from .forms import SessionForm, EnrollmentForm, CommentForm
+from .forms import SessionForm, EnrollmentForm, CommentForm, ClassEditForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
+@login_required
 def class_list(request):
     classes = YogaClass.objects.all()
-    class_tutor = Profile.objects.all()
-    class_interaction = Interaction.objects.all()
-    logged_user = request.user
-    return render(request, 'session/class_list.html', {'classes': classes, 'class_tutor':class_tutor, 'class_interaction':class_interaction, 'logged_user':logged_user})
 
+    #search code
+    class_name = request.GET.get('class_name')
+    if class_name != '' and class_name is not None:
+        classes = classes.filter(title__icontains=class_name)
+
+    #paginator code
+    paginator = Paginator(classes,5)
+    page = request.GET.get('page')
+    classes = paginator.get_page(page)
+
+    logged_user = request.user
+    return render(request, 'session/class_list.html', {'classes': classes, 'logged_user':logged_user})
+
+@login_required
 def class_list_tutor(request):
     classes_t = YogaClass.objects.all()
-    class_tutor_t = Profile.objects.all()
+    class_tutor_t = Tutor.objects.all()
     class_interaction_t = Interaction.objects.all()
     logged_user = request.user
     return render(request, 'session/class_list_tutor.html', {'classes_t': classes_t, 'class_tutor_t':class_tutor_t, 'class_interaction_t':class_interaction_t, 'logged_user':logged_user})
 
+@login_required
 def class_detail(request, class_id):
-    yoga_class = YogaClass.objects.get(id=class_id)
+    yoga_class = get_object_or_404(YogaClass, id=class_id)
     return render(request, 'session/class_detail.html', {'yoga_class': yoga_class})
+
+@login_required
+def class_detail_student(request, class_id):
+    yoga_class_detail = get_object_or_404(YogaClass, pk=class_id)
+    
+    # Retrieve interactions related to the specified yoga class
+    interactions = Interaction.objects.filter(yoga_class=yoga_class_detail)
+
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            session_id = request.POST.get('session_id')
+            session = get_object_or_404(Interaction, id=session_id)
+            new_comment.post = session
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
+
+    logged_user = request.user
+
+    return render(request, 'session/class_detail_student.html', {'yoga_class_detail': yoga_class_detail, 'interactions':interactions, 'comment_form': comment_form,'logged_user':logged_user})
+
+@login_required
+def delete_class(request, class_id):
+    if request.method == 'POST':
+        yoga_class = YogaClass.objects.get(id=class_id)
+        yoga_class.delete()
+        return redirect('class_list_tutor')
+    else:
+        return render(request, 'session/class_delete_confirm.html', {'class_id': class_id})
+
+@login_required
+def edit_class(request):
+    loggedin_user = request.user
+    edit_class = Profile.objects.filter(user=loggedin_user)
+    if request.method == 'POST':
+        edit_form = ClassEditForm(instance=request.user, data=request.POST)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect('dashboard_tutor')
+    else:
+        edit_form = ClassEditForm(instance=request.user)
+    return render(request, 'session/edit_class.html', {'edit_form':edit_form, 'edit_class':edit_class})
 
 def add_class_type(request):
     if request.method == 'POST':
@@ -78,8 +135,9 @@ def dashboard(request):
 
     dashboard = YogaClass.objects.all()
     interaction = Interaction.objects.all()
+
     logged_user = request.user
-    return render(request, 'session/dashboard.html', {'dashboard':dashboard, 'interaction':interaction,'logged_user':logged_user, 'comment_form': comment_form})
+    return render(request, 'session/dashboard.html', {'dashboard':dashboard,'logged_user':logged_user, 'interaction':interaction,'logged_user':logged_user})
 
 @login_required
 def dashboard_tutor(request):
