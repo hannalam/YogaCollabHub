@@ -1,0 +1,25 @@
+{% extends 'users/base.html' %} {% load static %} {% block body %}
+<div class="flex mt-5 p-10 justify-center">
+  <h1 class="text-3xl font-normal mb-2 text-gray-500">Add New Class Type</h1>
+</div>
+
+<div class="grid mx-60 p-10 grid-cols-1">
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-2">
+      <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+        >Class Type:
+      </label>
+      <div
+        class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+      >
+        {{ type_form.name }}
+      </div>
+    </div>
+
+    <button class="bg-green-500 text-white my-5 px-5 py-2" type="submit">
+      Sumbit
+    </button>
+  </form>
+</div>
+{% endblock %}

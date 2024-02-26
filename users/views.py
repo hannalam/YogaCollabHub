@@ -131,4 +131,16 @@ def tutorProfile(request):
 
 
 def invalid(request):
-    return render(request, 'user/invalid_credentials.html')
+    return render(request, 'users/invalid_credentials.html')
+
+@login_required
+def settings(request):
+    loggedin_user = request.user
+    profile_setting = Profile.objects.filter(user=loggedin_user)
+    return render(request, 'users/settings.html', {'profile_setting': profile_setting})
+
+@login_required
+def setting(request):
+    loggedin_user = request.user
+    tutor_setting = Tutor.objects.filter(user=loggedin_user)
+    return render(request, 'users/setting.html', {'tutor_setting': tutor_setting})

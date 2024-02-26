@@ -1,0 +1,22 @@
+{% extends 'users/base.html' %} {% load static %} {% block body %}
+<div class="flex mt-5 p-5 justify-center">
+  <h1 class="text-3xl font-normal mb-2 text-gray-500">
+    Enrollment Confirmation
+  </h1>
+</div>
+<div class="grid mx-60 p-5 grid-cols-2">
+  <p class="text-lg font-normal mb-2 text-gray-400"> 
+    {{ enroll.student }}You are about to enroll in {{ enroll.session.title }}. 
+    Please confirm:</p>
+</div>
+<form class="grid mx-60 p-5 grid-cols-2">
+    <div>
+        {% csrf_token %}
+        {{ enroll_form.as_p }}
+        <button type="submit">Confirm Enrollment</button>
+    </div>
+</form>
+
+</div>
+
+{% endblock %}

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import YogaClass, ClassType
+from enrollment.models import Enrollment
 from users.models import Profile, Tutor
 from interactions.models import Interaction
-from .forms import SessionForm, EnrollmentForm, CommentForm, ClassEditForm
+from .forms import SessionForm, EnrollmentForm, CommentForm, ClassEditForm, ClassTypeForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
@@ -34,7 +35,23 @@ def class_list_tutor(request):
 @login_required
 def class_detail(request, class_id):
     yoga_class = get_object_or_404(YogaClass, id=class_id)
-    return render(request, 'session/class_detail.html', {'yoga_class': yoga_class})
+    interaction_t = Interaction.objects.filter(yoga_class=yoga_class)
+    comment_form_t = CommentForm(data=request.POST)
+    if request.method == 'POST':
+        
+        if comment_form_t.is_valid():
+            new_comment = comment_form_t.save(commit=False)
+            session_id = request.POST.get('session_id')
+            session = get_object_or_404(Interaction, id=session_id)
+            new_comment.post = session
+            new_comment.save()
+        else:
+            comment_form_t = CommentForm()
+
+
+    logged_user = request.user
+    return render(request, 'session/class_detail.html', {'yoga_class': yoga_class, 'interaction_t':interaction_t, 'comment_form_t': comment_form_t,'logged_user':logged_user})
+
 
 @login_required
 def class_detail_student(request, class_id):
@@ -69,6 +86,7 @@ def delete_class(request, class_id):
 
 @login_required
 def edit_class(request):
+    
     loggedin_user = request.user
     edit_class = Profile.objects.filter(user=loggedin_user)
     if request.method == 'POST':
@@ -78,18 +96,24 @@ def edit_class(request):
             return redirect('dashboard_tutor')
     else:
         edit_form = ClassEditForm(instance=request.user)
+
     return render(request, 'session/edit_class.html', {'edit_form':edit_form, 'edit_class':edit_class})
 
 def add_class_type(request):
     if request.method == 'POST':
-        new_type = request.POST.get('new_type')
-        ClassType.objects.create(name=new_type)
-        # Handle form submission or redirect as needed
-    return render(request, 'session/add_class_type.html')
-# Other views for managing classes, enrollment, scheduling, etc., can be added here
+
+        type_form = ClassTypeForm(data=request.POST)
+        if type_form.is_valid():
+
+            type_form.save()
+            return redirect('create_class')
+    else:
+        type_form = ClassTypeForm()
+    return render(request, 'session/class_type.html', {'type_form':type_form})
 
 @login_required
 def create_class(request):
+    types = ClassType.objects.all()
     if request.method == 'POST':
         form = SessionForm(data=request.POST)
         if form.is_valid():
@@ -99,8 +123,8 @@ def create_class(request):
             return redirect('class_list')
     else:
         form = SessionForm()
-    return render(request, 'session/create_class.html', {'form': form})
-
+    return render(request, 'session/create_class.html', {'form': form, 'types':types})
+    
 @login_required
 def enroll_class(request, class_id):
     enroll_class = get_object_or_404(YogaClass, id=class_id)
@@ -123,39 +147,15 @@ def schedule_class(request, class_id):
 @login_required
 def dashboard(request):
 
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        new_comment = comment_form.save(commit=False)
-        session_id = request.POST.get('session_id')
-        session = get_object_or_404(Interaction, id=session_id)
-        new_comment.post = session
-        new_comment.save()
-    else:
-        comment_form = CommentForm()
-
-    dashboard = YogaClass.objects.all()
-    interaction = Interaction.objects.all()
-
-    logged_user = request.user
-    return render(request, 'session/dashboard.html', {'dashboard':dashboard,'logged_user':logged_user, 'interaction':interaction,'logged_user':logged_user})
+    enrolled_classes = Enrollment.objects.filter(student=request.user.profile, confirmed=True)
+    return render(request, 'session/dashboard.html', {'enrolled_classes':enrolled_classes})
 
 @login_required
 def dashboard_tutor(request):
-
-    if request.method == 'POST':
-        comment_form_t = CommentForm(data=request.POST)
-        new_comment = comment_form_t.save(commit=False)
-        session_id = request.POST.get('session_id')
-        session = get_object_or_404(Interaction, id=session_id)
-        new_comment.post = session
-        new_comment.save()
-    else:
-        comment_form_t = CommentForm()
-
+    class_type = ClassType.objects.all()
     dashboard_t = YogaClass.objects.all()
-    interaction_t = Interaction.objects.all()
     logged_user = request.user
-    return render(request, 'session/dashboard_tutor.html', {'dashboard_t':dashboard_t, 'interaction_t':interaction_t,'logged_user':logged_user, 'comment_form_t': comment_form_t})
+    return render(request, 'session/dashboard_tutor.html', {'dashboard_t':dashboard_t, 'logged_user':logged_user, 'class_type':class_type})
 
 def session_like(request):
     session_id = request.POST.get('session_id')

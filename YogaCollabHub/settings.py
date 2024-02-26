@@ -34,9 +34,10 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'users',
     'session',
-    'materials',
     'enrollment',
     'interactions',
+    'channels',
+    'aichatbot',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -74,7 +75,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'YogaCollabHub.wsgi.application'
+ASGI_APPLICATION = 'YogaCollabHub.asgi.application'
 
+CHANNEL_LAYERS ={
+    'default':{
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -134,3 +141,4 @@ LOGOUT_URL = 'logout'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+

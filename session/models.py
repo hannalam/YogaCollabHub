@@ -20,6 +20,15 @@ class YogaClass(models.Model):
     location = models.CharField(max_length=100)
     enrolled_students = models.ManyToManyField(Profile, related_name='enrolled_classes', blank=True)
 
+    # Field for uploading images
+    image_material = models.ImageField(upload_to='image_materials/', blank=True, null=True)
+    
+    # Field for uploading audio files
+    audio_material = models.FileField(upload_to='audio_materials/', blank=True, null=True)
+    
+    # Field for uploading video files
+    video_material = models.FileField(upload_to='video_materials/', blank=True, null=True)
+
 
     def __str__(self):
         return f"{self.title} - {self.date} - {self.time}"

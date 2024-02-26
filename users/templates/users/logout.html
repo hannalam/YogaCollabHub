@@ -1,31 +1,33 @@
 {% extends 'users/base.html' %} {% block body %}
 
-<div class="flex user-container mb-2 my-5">
-  <h2 class="text-2xl m-10 font-bold">You have been logout</h2>
+<div class="flex mt-5 p-10 justify-center">
+  <h2 class="text-2xl m-10 mx-20 font-bold">You have been logout</h2>
 
-  <div div class="mb-2 py-5 justify-center">
-    <a
-      class="bg-blue-700 rounded text-white px-5 my-5 py-2"
-      href="{% url 'login'%}"
-      >User Login</a
-    >
-    <a
-      class="bg-blue-700 rounded text-white m-20 px-5 my-5 py-2"
-      href="{% url 'register'%}"
-      >User Sign up</a
-    >
-  </div>
-  <div div class="py-5 justify-center">
-    <a
-      class="bg-green-700 rounded text-white px-5 my-5 py-2"
-      href="{% url 'tutor_login'%}"
-      >Tutor Login</a
-    >
-    <a
-      class="bg-green-700 rounded text-white m-20 px-5 my-5 py-2"
-      href="{% url 'tutorRegister'%}"
-      >Tutor Sign up</a
-    >
+  <div>
+    <div div class="mb-2 py-5 justify-center">
+      <a
+        class="bg-blue-700 rounded text-white px-5 my-5 py-2"
+        href="{% url 'login'%}"
+        >User Login</a
+      >
+      <a
+        class="bg-blue-700 rounded text-white m-20 px-5 my-5 py-2"
+        href="{% url 'register'%}"
+        >User Sign up</a
+      >
+    </div>
+    <div div class="py-5 justify-center">
+      <a
+        class="bg-green-700 rounded text-white px-5 my-5 py-2"
+        href="{% url 'tutor_login'%}"
+        >Tutor Login</a
+      >
+      <a
+        class="bg-green-700 rounded text-white m-20 px-5 my-5 py-2"
+        href="{% url 'tutorRegister'%}"
+        >Tutor Sign up</a
+      >
+    </div>
   </div>
 </div>
 {% endblock %}

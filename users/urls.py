@@ -20,4 +20,6 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('tutorProfile/', views.tutorProfile, name='tutorProfile'),
     path('invalid_credentials/', views.invalid, name='invalid'),
+    path('settings/', views.settings, name='settings'),
+    path('setting/', views.setting, name='setting'),
 ]

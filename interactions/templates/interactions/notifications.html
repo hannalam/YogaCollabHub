@@ -1,0 +1,20 @@
+{% extends 'users/base.html' %} {% block body %}
+<div class="flex mt-5 p-10 justify-center">
+  <h1 class="text-3xl font-normal m-20 text-gray-900">Notifications</h1>
+  <div div class="mb-2 py-5 mx-10 justify-center">
+    {% for notification in notifications %}
+    <li class="">
+      <p>{{ notification.message }}</p>
+      <small>Received at: {{ notification.timestamp }}</small>
+    </li>
+    {% endfor %}
+    <div class="my-10">
+      <a
+        class="bg-blue-700 rounded text-white px-5 py-2"
+        href="{% url 'inbox'%}"
+        >back to Inbox</a
+      >
+    </div>
+  </div>
+</div>
+{% endblock %}

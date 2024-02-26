@@ -1,4 +1,53 @@
-{% extends 'users/base_tutor.html' %} {% block body %}
+{% extends 'users/base.html' %} {% block body %}
+<head>
+  <!-- Bootstrap 4 -->
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+    crossorigin="anonymous"
+  />
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"
+  ></script>
+
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- Font Awesome -->
+  <link
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+    crossorigin="anonymous"
+  />
+
+  <!-- Moment.js -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"
+    integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA="
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- Tempus Dominus Bootstrap 4 -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css"
+    integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs="
+    crossorigin="anonymous"
+  />
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"
+    integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4="
+    crossorigin="anonymous"
+  ></script>
+</head>
+
 <div class="flex mt-5 p-10 justify-center">
   <div class="py-5 mx-10 justify-center">
     <div class="flex user-container mb-2 my-5">
@@ -10,10 +59,129 @@
       >
       </div>
       <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %} {{ edit_form.as_p }}
+        {% csrf_token %} 
+        <div class="mb-2">
+          <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+            >Title: </label
+          >
+          <div
+            class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+          >
+            {{ edit_form.title }}
+          </div>
+        </div>
+        
+        <div class="mb-2">
+          <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+            >Class type:</label
+          >
+          <div
+            class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+          >
+            {{ edit_form.class_type }}
+          </div>
+        </div>
+        
+                <div class="mb-2">
+            <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+              >Date & Time:
+            </label>
+          <div
+            class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+          >
+            <div
+              class="input-group date"
+              id="datetimepicker1"
+              data-target-input="nearest"
+            >
+              {{ edit_form.date }}
+              <div
+                class="input-group-append"
+                data-target="#datetimepicker1"
+                data-toggle="datetimepicker"
+              >
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+              </div>
+            </div>
+          </div>
+
+        <div class="mb-2">
+          <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+            >Classroom equipment:</label
+          >
+          <div
+            class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+          >
+            {{ edit_form.classroom_equipment }}
+          </div>
+        </div>
+        
+        <div class="mb-2">
+          <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+            >Description:</label
+          >
+          <div
+            class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+          >
+            {{ edit_form.description }}
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+            >Location: </label
+          >
+          <div
+            class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+          >
+            {{ edit_form.location }}
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+            >Image:
+          </label>
+          <div
+            class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+          >
+            {{edit_form.image_material}}
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+            >Audio:
+          </label>
+          <div
+            class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+          >
+            {{edit_form.audio_material}}
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label class="block text-grey-700 text-sm font-bold mb-2" for=""
+            >Video:
+          </label>
+          <div
+            class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
+          >
+            {{edit_form.video_material}}
+          </div>
+        </div>
         <button class="bg-green-500 text-white my-5 px-5 py-2" type="submit">Sumbit</button>
       </form>
     </div>
   </div>
-  {% endblock %}
+  <script>
+  $(function () {
+    $("#datetimepicker1").datetimepicker({
+      format: "DD/MM/YYYY HH:mm",
+    });
+  });
+</script>
 </div>
+  {% endblock %}
+
+

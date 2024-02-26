@@ -1,34 +1,137 @@
-{% extends 'users/base_tutor.html' %} {% load static %} {% block body %}
+{% extends 'users/base.html' %} {% load static %} {% block body %}
 <div class="flex mt-5 p-5 justify-center">
   <h1 class="text-3xl font-normal mb-2 text-gray-500">Classes</h1>
 </div>
+
 <div class="grid mx-60 p-5 grid-cols-1">
-  <div class="bg-gray-300 p-5">
-    <div class="mx-2 my-2 font-bold">
+
+  <div class="bg-gray-100 p-5">
+
+    <div class="bg-blue-100 mx-20 my-2 font-bold text-lg p-5 shadow-md">
       <span>{{yoga_class.title}}</span>
-      {% for class in class_tutor %}
-      <img src="{{class.profile_photo.url}}" alt="" />
-      {% endfor %}
     </div>
-    <h4>class_type: {{yoga_class.class_type}}</h4>
-    <div class="user-container">
-      <img src="{{class_tutor.profile_photo.url}}" alt="" />
-      <div class="mx-2 my-2 font-bold">
-        <span>Tutor: {{yoga_class.tutor}}</span>
+    <div class="mx-20 my-2 p-5 shadow-md">
+      <div> <strong>Type: </strong> {{yoga_class.class_type}}</div>
+      <div> <strong>Tutor: </strong>{{yoga_class.tutor}}</div>
+      <h4> <strong>Date: </strong>{{yoga_class.date}}</h4>
+      <h4> <strong>Time: </strong>{{yoga_class.time}}</h4>
+      <h4> <strong>Location: </strong>{{yoga_class.location}}</h4>
+    </div>
+    <h4 class="mx-20 font-bold">Classroom Equipment:</h4>
+    <div class="mx-20 my-2 p-5  shadow-md">
+      <div>{{yoga_class.classroom_equipment}}</div>
+    </div>
+    <h4 class="mx-20 font-bold">Description:</h4>
+    <div class="mx-20 my-2 p-5  shadow-md">
+      <div>{{yoga_class.description}}</div>
+    </div>
+
+    <br><br>
+        <div class="bg-blue-100 mx-20 my-2 font-bold text-lg p-5 shadow-md">
+      <span>Class Materials</span>
+    </div>
+    
+    <h4 class="mx-20 font-bold">Image:</h4>
+    <div class="mx-20 my-2 p-5  shadow-md">
+      <img class="h-80 rounded-full"
+        src="{{yoga_class.image_material.url}}"
+        alt=""/>
+    </div>
+
+    <h4 class="mx-20 font-bold">Audio:</h4>
+    <div class="mx-20 my-2 p-5  shadow-md">
+      <audio controls id="player">
+        <source src="{{yoga_class.audio_material.url}}" type="audio/wav">
+        Your browser does not support the audio element.
+      </audio>
+      <div>{{yoga_class.audio_material}}</div>
+    </div>
+
+    <h4 class="mx-20 font-bold">Video:</h4>
+    <div class="mx-20 my-2 p-5  shadow-md">
+      <video width='500' controls>
+      <source src='{{yoga_class.video_material.url}}' type='video/mp4'>
+      Your browser does not support the video tag.
+    </video>
+      <div>{{yoga_class.video_material}}</div>
+    </div>
+
+  </br>
+
+
+  <div class="px-3 py-4 mx-20 mb-2">
+    <div class="icon-container flex gap-3">
+      <a id="{{session.id}}" class="btn-like">
+        {% if logged_user in interaction_t.liked_by_user.all %}
+        <img
+          class="w-5 h-5"
+          src="{% static 'users/images/redlike.png' %}"
+          alt="https://www.iconfinder.com/icons/652556/beautiful_design_heart_love_red_romance_valentine_icon"
+        />
+        {% else %}
+        <img
+          class="w-5 h-5"
+          src="{% static 'users/images/like.png' %}"
+          alt="https://www.iconfinder.com/icons/8666647/heart_icon"
+        />
+        {% endif %}
+      </a>
+      <a>
+        <img
+          class="w-5 h-5"
+          src="{% static 'users/images/comment.png' %}"
+          alt="https://www.iconfinder.com/icons/8664929/comment_chat_message_icon"
+        />
+      </a>
+      <a>
+        <img
+          class="w-5 h-5"
+          src="{% static 'users/images/share.png' %}"
+          alt="https://www.iconfinder.com/icons/9026047/share_network_icon"
+        />
+      </a>
+    </div>
+    {% if interaction_t.liked_by_user.count < 1 %} {% elif
+    interaction_t.liked_by_user.count == 1 %} {{
+    interaction_t.liked_by_user.first }} Likes this {% elif
+    interaction_t.liked_by_user.count > 1 %} {{interaction_t.liked_by_user.first
+    }} & {{ interaction_t.liked_by_user.count }} Likes this {% endif %}
+  </div>
+
+  <div>
+    <p class="text-gray-700 text-base">
+      {% for comment in interaction_t.session_comment.all %}
+      <b>{{comment.posted_by}}</b>:{{comment.body}} 
+    </p>
+    {% endfor %}
+  </div>
+  <div class="">
+    <form method="post" class="mx-20 mb-2 my-5">
+      {% csrf_token %}
+      <div class="rounded mr-10 py-2 text-green-700">
+        {{ comment_form_t.body }}
+        <button class="bg-green-500 text-white px-5 py-1" type="submit">
+        Add
+      </button>
       </div>
-    </div>
-    <h4>classroom_equipment:{{yoga_class.classroom_equipment}}</h4>
-    <h4>description:{{yoga_class.description}}</h4>
-    <h4>enrolled_students:{{yoga_class.enrolled_students}}</h4>
-    <div class="user-container">
-      <h4>enrollment:{{yoga_class.enrollment}}</h4>
-    </div>
-    <h4>interaction:{{yoga_class.interaction}}</h4>
-    <h4>location:{{yoga_class.location}}</h4>
-    <h4>material:{{yoga_class.material}}</h4>
-    <h4>Date:{{yoga_class.date}}</h4>
-    <h4>Time:{{yoga_class.time}}</h4>
+    </form>
+  </div>
   </div>
 </div>
-
 {% endblock %}
+
+
+<script type="text/javascript">
+  window.CSRF_TOKEN = "{{ csrf_token }}";
+  $(document).on("click", ".btn-like", function () {
+    console.log("This is working");
+    var session_id = this.id;
+    $.ajax({
+      method: "POST",
+      url: "/session/like",
+      data: { session_id: session_id, csrfmiddlewaretoken: window.CSRF_TOKEN },
+    });
+    window.location.href = "http://127.0.0.1:8000/session/dashboard";
+  });
+</script>
+

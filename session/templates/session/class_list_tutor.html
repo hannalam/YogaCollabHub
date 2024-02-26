@@ -1,35 +1,39 @@
-{% extends 'users/base_tutor.html' %} {% load static %} {% block body %}
-<div class="flex mt-5 p-10 justify-center">
+{% extends 'users/base.html' %} {% load static %} 
+<head>
+    <script src='https://cdn.tailwindcss.com'></script>
+</head>
+{% block body %}
+
+<div class="flex mt-3 p-5 justify-center">
   <h1 class="text-3xl font-normal mb-2 text-gray-500">
     Classes
   </h1>
 </div>
-<img src="{{class_tutor_t.profile_photo.url}}" alt="" />
+
 <div class="grid mx-60 p-10 grid-cols-1 ">
-  <a>
   {% for class in classes_t %}
-  <br href="#">
-  <div class="bg-gray-300 p-5">
-    <div class="mx-2 my-2 font-bold"><span>{{class.title}}</span></div>
-    <h4>class_type: {{class.class_type}}</h4>
-    <div class="user-container">
-      <img src="{{class_tutor.profile_photo.url}}" alt="" />
-      <div class="mx-2 my-2 font-bold"><span>Tutor: {{class.tutor}}</span></div>
+  <div class="bg-gray-100 p-5">
+
+    <div class="mx-20 my-2 font-bold text-lg p-5 shadow-md">
+      <span>{{class.title}}</span>
+    </div>
+    <div class="mx-20 my-2 p-5 shadow-md">
+      <div> <strong>Type: </strong> {{class.class_type}}</div>
+      <div> <strong>Tutor: </strong>{{class.tutor}}</div>
+      <h4> <strong>Date: </strong>{{class.date}}</h4>
+      <h4> <strong>Time: </strong>{{class.time}}</h4>
     </div>
 
-    <h4>Date:{{class.date}}</h4>
-    <h4>Time:{{class.time}}</h4>
-    <div class="user-container mb-2 my-5">
+    <div class="user-container mx-20 mb-2 my-5">
       <a
         class="bg-blue-700 text-white my-5 px-5 py-2"
         href="{% url 'class_detail' class.id %}"
-        >View Detail</a
+        >View Details</a
       >
     </div>
-    </div>
-    </br>
-    {% endfor %}
-  </a>
+  </div>
+  </br>
+  {% endfor %}
 </div>
 
 {% endblock %}

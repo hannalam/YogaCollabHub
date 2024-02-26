@@ -24,6 +24,9 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
-    path('session/', include('session.urls'))
+    path('session/', include('session.urls')),
+    path('interactions/', include('interactions.urls')),
+    path('enrollment/', include('enrollment.urls')),
+    path('aichatbot/', include('aichatbot.urls')),
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

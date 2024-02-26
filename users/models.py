@@ -15,6 +15,7 @@ class Profile(models.Model):
     bio = models.TextField(null=True, blank=True)
     location = models.CharField(max_length=100, null=True, blank=True)
     #user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, default='student')
+    tutor = models.ForeignKey('Tutor', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.user.username
