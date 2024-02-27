@@ -2,8 +2,18 @@
 <div class="flex p-15 justify-center">
   <div class="container m-5">
     <div class="message-container m-20">
-      <h2 class="text-xl m-8 font-bold">{{ chatroom.name }}</h2>
+      <div class="flex user-container mb-2 mx-60 my-5">
+        <h2 class="text-3xl font-norma m-10 text-gray-500">
+          {{ chatroom.name }}
+        </h2>
+        <a
+          class="bg-blue-700 text-white m-10 px-2 py-2"
+          href="{% url 'chatrooms'%}"
+          >Back to Chatrooms</a
+        >
+      </div>
     </div>
+
     <!--List chat messages with the user name, message and time -->
     <div
       class="message-container m-20 overflow-auto h-[400px]"

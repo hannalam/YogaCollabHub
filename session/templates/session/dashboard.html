@@ -4,11 +4,48 @@
 </div>
 
 <div class="grid mx-60 p-10 grid-cols-1">
-  <h1>Enrolled Classes</h1>
-  <ul>
+  <h3 class="font-bold text-lg">Enrolled Classes</h3>
+  <div class="shadow grid mx-60 p-10 grid-cols-1">
     {% for enrollment in enrolled_classes %}
-    <li>{{ enrollment.session.title }}</li>
+    <div class="mx-2 my-2 font-bold p-5 shadow-md">
+      <form
+        action="{% url 'delete_enrollment' enrollment_id=enrollment.id %}"
+        method="post"
+      >
+        <span>{{ enrollment.session.title }}</span>
+        {% csrf_token %}
+        <button class="bg-red-700 text-white my-5 px-5 py-2" type="submit">
+          Delete
+        </button>
+      </form>
+    </div>
+
     {% endfor %}
-  </ul>
+    <div class="user-container mb-2 px-2 my-5">
+      <a
+        class="bg-blue-700 text-white my-5 px-5 py-2"
+        href="{% url 'class_list'%}"
+        >Enroll a class</a
+      >
+    </div>
+  </div>
+</div>
+
+<div class="grid mx-60 p-10 grid-cols-1">
+  <h3 class="font-bold text-lg">My Post</h3>
+  <div class="shadow grid mx-60 p-10 grid-cols-1">
+    {% for enrollment in enrolled_classes %}
+    <div class="mx-2 my-2 font-bold p-5 shadow-md">
+      <span>{{ enrollment.session.title }}</span>
+    </div>
+    {% endfor %}
+    <div class="user-container mb-2 px-2 my-5">
+      <a
+        class="bg-blue-700 text-white my-5 px-5 py-2"
+        href="{% url 'class_list'%}"
+        >Create a post</a
+      >
+    </div>
+  </div>
 </div>
 {% endblock %}

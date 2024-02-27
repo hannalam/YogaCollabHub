@@ -24,7 +24,7 @@
 <div class="grid mx-60 p-5 grid-cols-1 border-4">
   <h3 class="font-bold text-lg">My Classes</h3>
   {% for class in dashboard_t %}
-  <div class="shadow hover:translate-x-4 grid mx-60 p-10 grid-cols-1">
+  <div class="shadow grid mx-60 p-10 grid-cols-1">
     <div class="mx-2 my-2 font-bold text-lg p-5 shadow-md">
       <span>{{class.title}}</span>
     </div>
@@ -57,5 +57,6 @@
       >
     </div>
   </div>
+  {% endfor %}
 </div>
-{% endfor %} {% endblock %}
+{% endblock %}

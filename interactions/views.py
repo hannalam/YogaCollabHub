@@ -1,41 +1,10 @@
 # I wrote this code
 from django.shortcuts import render, redirect
-from .models import Interaction, Notification, Message, ChatRoom, ChatRoomMessage
-from .forms import InteractionForm, MessageForm
+from .models import Notification, Message, ChatRoom, ChatRoomMessage, Yogahub
+from .forms import MessageForm, YogaHubForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-def interaction_list(request):
-    interactions = Interaction.objects.all()
-    return render(request, 'interactions/interaction_list.html', {'interactions': interactions})
-
-def add_interaction(request):
-    if request.method == 'POST':
-        form = InteractionForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('interaction_list')
-    else:
-        form = InteractionForm()
-    return render(request, 'interactions/add_interaction.html', {'form': form})
-
-def edit_interaction(request, interaction_id):
-    interaction = Interaction.objects.get(pk=interaction_id)
-    if request.method == 'POST':
-        form = InteractionForm(request.POST, instance=interaction)
-        if form.is_valid():
-            form.save()
-            return redirect('interaction_list')
-    else:
-        form = InteractionForm(instance=interaction)
-    return render(request, 'interactions/edit_interaction.html', {'form': form, 'interaction': interaction})
-
-def delete_interaction(request, interaction_id):
-    interaction = Interaction.objects.get(pk=interaction_id)
-    if request.method == 'POST':
-        interaction.delete()
-        return redirect('interaction_list')
-    return render(request, 'interactions/delete_interaction.html', {'interaction': interaction})
 
 @login_required
 def inbox(request):
@@ -54,20 +23,44 @@ def inbox(request):
     return render(request, 'interactions/inbox.html', {'messages': messages, 'mes_form': mes_form})
 
 @login_required
+def new_post(request):
+    if request.method == 'POST':
+        yogahubform = YogaHubForm(data=request.POST, files=request.FILES)
+        if yogahubform.is_valid():
+            new_post = yogahubform.save(commit=False)
+            new_post.user = request.user
+            new_post.save()
+            return redirect('yogahub')
+
+    else:
+        yogahubform = YogaHubForm(data=request.GET)
+    return render(request, 'interactions/newpost.html', {'yogahubform': yogahubform})
+
+@login_required
+def yogahub(request):
+    status = Yogahub.objects.all()
+    logged_user = request.user
+    return render(request, 'interactions/yogahub.html', {'status': status, 'logged_user':logged_user})
+
+@login_required
 def notifications(request):
     notifications = Notification.objects.filter(user=request.user)
     return render(request, 'interactions/notifications.html', {'notifications': notifications})
 
+@login_required
 # Chat room main page
 def chatrooms(request):
     chatrooms = ChatRoom.objects.all()
     return render(request, 'interactions/chatrooms.html', {'chatrooms': chatrooms})
 
+@login_required
 # Individual chat room page
 def chatroom(request, slug):
     chatroom = ChatRoom.objects.get(slug=slug)
     messages = ChatRoomMessage.objects.filter(chatroom=chatroom)[0:30]
     return render(request, 'interactions/chatroom.html', {'chatroom': chatroom,'messages':messages})
     #return render(request, 'interactions/chatroom.html', {'chatroom': chatroom})
+
+
 
 # end of code I wrote

@@ -115,12 +115,12 @@ def add_class_type(request):
 def create_class(request):
     types = ClassType.objects.all()
     if request.method == 'POST':
-        form = SessionForm(data=request.POST)
+        form = SessionForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             new_class = form.save(commit=False)
             new_class.tutor = request.user.profile  # Assuming user profile is linked
             new_class.save()
-            return redirect('class_list')
+            return redirect('dashboard_tutor')
     else:
         form = SessionForm()
     return render(request, 'session/create_class.html', {'form': form, 'types':types})
@@ -147,8 +147,15 @@ def schedule_class(request, class_id):
 @login_required
 def dashboard(request):
 
-    enrolled_classes = Enrollment.objects.filter(student=request.user.profile, confirmed=True)
+    enrolled_classes = Enrollment.objects.filter(student=request.user.profile)
     return render(request, 'session/dashboard.html', {'enrolled_classes':enrolled_classes})
+
+def delete_enrollment(request, enrollment_id):
+    enrollment = get_object_or_404(Enrollment, pk=enrollment_id)
+    if request.method == 'POST':
+        enrollment.delete()
+        return redirect('dashboard')
+    return redirect('class_list')
 
 @login_required
 def dashboard_tutor(request):

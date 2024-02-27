@@ -1,3 +1,9 @@
+
+'''
+learn from: How to Build a Web Assistant Using Django and ChatGPT API in Python  
+https://thepythoncode.com/article/web-assistant-django-with-gpt3-api-python?utm_content=cmp-true
+'''
+
 # importing render and redirect
 from django.shortcuts import render, redirect
 # importing the openai API

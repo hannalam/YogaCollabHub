@@ -5,18 +5,23 @@
   </h1>
 </div>
 <div class="grid mx-60 p-5 grid-cols-2">
-  <p class="text-lg font-normal mb-2 text-gray-400"> 
-    {{ enroll.student }}You are about to enroll in {{ enroll.session.title }}. 
-    Please confirm:</p>
+  <p class="text-2xl font-normal mb-2">{{ enroll.student }}</p>
 </div>
-<form class="grid mx-60 p-5 grid-cols-2">
-    <div>
-        {% csrf_token %}
-        {{ enroll_form.as_p }}
-        <button type="submit">Confirm Enrollment</button>
-    </div>
-</form>
+<div class="grid mx-60 p-5 grid-cols-2">
+  <p class="text-lg font-normal text-gray-400">You are about to enroll in</p>
+</div>
+<div class="grid mx-60 p-5 grid-cols-2">
+  <p class="text-2xl font-normal mb-2">{{ enroll.session.title }}</p>
+</div>
 
-</div>
+<form class="grid mx-60 p-5 py-20 grid-cols-2">
+  <div>
+    {% csrf_token %}
+    <p class="text-lg font-normal">Confirmed: {{ enroll_form.confirmed }}</p>
+    <button class="bg-green-500 text-white my-5 px-5 py-2" type="submit">
+      Confirm Enrollment
+    </button>
+  </div>
+</form>
 
 {% endblock %}

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Interaction, Message
+from .models import Interaction, Message, Yogahub
 
 class InteractionForm(forms.ModelForm):
     class Meta:
@@ -10,3 +10,8 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ['receiver', 'content']
+
+class YogaHubForm(forms.ModelForm):
+    class Meta:
+        model = Yogahub
+        fields = ('title', 'image', 'caption')

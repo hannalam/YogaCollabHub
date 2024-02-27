@@ -1,119 +1,127 @@
 {% extends 'users/base.html' %} {% load static %} {% block body %}
 <div class="flex mt-5 p-5 justify-center">
-  <h1 class="text-3xl font-normal mb-2 text-gray-500">Classes</h1>
+  <div class="flex user-container mb-2 my-5">
+    <h2 class="text-3xl font-norma m-10 text-gray-500">Edit Class</h2>
+    <a
+      class="bg-blue-700 text-white m-10 px-2 py-2"
+      href="{% url 'class_list'%}"
+      >Back to Class list</a
+    >
+  </div>
 </div>
+
 <div class="grid mx-60 p-5 grid-cols-1">
   <div class="bg-gray-300 p-5">
-    <div class="mx-2 my-2 font-bold">
+        <div class="bg-blue-100 mx-20 my-2 font-bold text-lg p-5 shadow-md">
       <span>{{yoga_class_detail.title}}</span>
-      {% for class in class_tutor %}
-      <img src="{{class.profile_photo.url}}" alt="" />
-      {% endfor %}
     </div>
-    <h4>class_type: {{yoga_class_detail.class_type}}</h4>
-    <div class="user-container">
-      <img src="{{class_tutor.profile_photo.url}}" alt="" />
-      <div class="mx-2 my-2 font-bold">
-        <span>Tutor: {{yoga_class_detail.tutor}}</span>
-      </div>
-    </div>
-    <h4>classroom_equipment:{{yoga_class_detail.classroom_equipment}}</h4>
-    <h4>description:{{yoga_class_detail.description}}</h4>
-    <h4>enrolled_students:{{yoga_class_detail.enrolled_students}}</h4>
-    <div class="user-container">
-      <h4>enrollment:{{yoga_class_detail.enrollment}}</h4>
-    </div>
-    <h4>interaction:{{yoga_class_detail.interaction}}</h4>
-    <h4>location:{{yoga_class_detail.location}}</h4>
-    <h4>material:{{yoga_class_detail.material}}</h4>
-    <h4>Date:{{yoga_class_detail.date}}</h4>
-    <h4>Time:{{yoga_class_detail.time}}</h4>
 
-
-    <br /><br />
-    {% for interaction in interactions %}
-    <div>
-      <div class="font-bold text-xl mb-2">
-        Class: {{interaction.yoga_class}}
-      </div>
-
-      <h2>user: {{interaction.user}}</h2>
-      <h2>liked_by_user: {{interaction.liked_by_user}}</h2>
-      <h2>timestamp: {{interaction.timestamp}}</h2>
-      <h2>interaction_date: {{interaction.interaction_date}}</h2>
-      <div class="px-6 py-4">
-        <div class="icon-container flex gap-3">
-          <a id="{{session.id}}" class="btn-like">
-            {% if logged_user in interaction.liked_by_user.all %}
-            <img
-              class="w-5 h-5"
-              src="{% static 'users/images/redlike.png' %}"
-              alt="https://www.iconfinder.com/icons/652556/beautiful_design_heart_love_red_romance_valentine_icon"
-            />
-            {% else %}
-            <img
-              class="w-5 h-5"
-              src="{% static 'users/images/like.png' %}"
-              alt="https://www.iconfinder.com/icons/8666647/heart_icon"
-            />
-            {% endif %}
-          </a>
-          <a>
-            <img
-              class="w-5 h-5"
-              src="{% static 'users/images/comment.png' %}"
-              alt="https://www.iconfinder.com/icons/8664929/comment_chat_message_icon"
-            />
-          </a>
-          <a>
-            <img
-              class="w-5 h-5"
-              src="{% static 'users/images/share.png' %}"
-              alt="https://www.iconfinder.com/icons/9026047/share_network_icon"
-            />
-          </a>
-        </div>
-        {% if interaction.liked_by_user.count < 1 %} {% elif
-        interaction.liked_by_user.count == 1 %} {{
-        interaction.liked_by_user.first }} Likes this {% elif
-        interaction.liked_by_user.count > 1 %} {{interaction.liked_by_user.first
-        }} & {{ interaction.liked_by_user.count }} Likes this {% endif %}
-      </div>
+    <div class="mx-20 my-2 p-5 shadow-md">
+      <div> <strong>Type: </strong> {{yoga_class_detail.class_type}}</div>
+      <div> <strong>Tutor: </strong>{{yoga_class_detail.tutor}}</div>
+      <h4> <strong>Date: </strong>{{yoga_class_detail.date}}</h4>
+      <h4> <strong>Time: </strong>{{yoga_class_detail.time}}</h4>
+      <h4> <strong>Location: </strong>{{yoga_class_detail.location}}</h4>
     </div>
-    <div>
-      <p class="text-gray-700 text-base">
-        {% for comment in interaction.session_comment.all %}
-        <b>{{comment.posted_by}}</b>:{{comment.body}} {% endfor %}
-      </p>
+    <h4 class="mx-20 font-bold">Classroom Equipment:</h4>
+    <div class="mx-20 my-2 p-5  shadow-md">
+      <div>{{yoga_class_detail.classroom_equipment}}</div>
     </div>
-    <div class="px-5 py-5">
-      <form method="post" class="bg-white rounded">
-        {% csrf_token %}
-        <div class="flex">
-        <div class="border rounded mr-10 text-green-700">
-          {{ comment_form.body }}
-        </div>
+    <h4 class="mx-20 font-bold">Description:</h4>
+    <div class="mx-20 my-2 p-5  shadow-md">
+      <div>{{yoga_class_detail.description}}</div>
+    </div>
 
-        <input
-          type="hidden"
-          name="session_id"
-          id="session_id"
-          value="{{interaction.id }}"
+    <br><br>
+    <div class="bg-blue-100 mx-20 my-2 font-bold text-lg p-5 shadow-md">
+      <span>Class Materials</span>
+    </div>
+    
+    <h4 class="mx-20 font-bold">Image:</h4>
+    <div class="mx-20 my-2 p-5  shadow-md">
+      <img class="h-80 rounded-full"
+        src="{{yoga_class_detail.image_material.url}}"
+        alt=""/>
+    </div>
+
+    <h4 class="mx-20 font-bold">Audio:</h4>
+    <div class="mx-20 my-2 p-5  shadow-md">
+      <audio controls id="player">
+        <source src="{{yoga_class_detail.audio_material.url}}" type="audio/wav">
+        Your browser does not support the audio element.
+      </audio>
+      <div>{{yoga_class_detail.audio_material}}</div>
+    </div>
+
+    <h4 class="mx-20 font-bold">Video:</h4>
+    <div class="mx-20 my-2 p-5  shadow-md">
+      <video width='500' controls>
+      <source src='{{yoga_class_detail.video_material.url}}' type='video/mp4'>
+      Your browser does not support the video tag.
+    </video>
+      <div>{{yoga_class_detail.video_material}}</div>
+    </div>
+
+  </br>
+
+  <div class="px-3 py-4 mx-20 mb-2">
+    <div class="icon-container flex gap-3">
+      <a id="{{session.id}}" class="btn-like">
+        {% if logged_user in interaction.liked_by_user.all %}
+        <img
+          class="w-5 h-5"
+          src="{% static 'users/images/redlike.png' %}"
+          alt="https://www.iconfinder.com/icons/652556/beautiful_design_heart_love_red_romance_valentine_icon"
         />
-        <input
-          type="hidden"
-          name="posted_by"
-          id="posted_by"
-          value="{{logged_user }}"
+        {% else %}
+        <img
+          class="w-5 h-5"
+          src="{% static 'users/images/like.png' %}"
+          alt="https://www.iconfinder.com/icons/8666647/heart_icon"
         />
+        {% endif %}
+      </a>
+      <a>
+        <img
+          class="w-5 h-5"
+          src="{% static 'users/images/comment.png' %}"
+          alt="https://www.iconfinder.com/icons/8664929/comment_chat_message_icon"
+        />
+      </a>
+      <a>
+        <img
+          class="w-5 h-5"
+          src="{% static 'users/images/share.png' %}"
+          alt="https://www.iconfinder.com/icons/9026047/share_network_icon"
+        />
+      </a>
+    </div>
+    {% if interaction.liked_by_user.count < 1 %} {% elif
+    interaction.liked_by_user.count == 1 %} {{
+    interaction.liked_by_user.first }} Likes this {% elif
+    interaction.liked_by_user.count > 1 %} {{interaction.liked_by_user.first
+    }} & {{ interaction.liked_by_user.count }} Likes this {% endif %}
+  </div>
 
-        <button class="bg-green-500 text-white px-5 py-2" type="submit">
-          Add
-        </button>
-      </form>
-    </div>
-    </div>
-{% endfor %}
+  <div>
+    <p class="text-gray-700 text-base">
+      {% for comment in interaction.session_comment.all %}
+      <b>{{comment.posted_by}}</b>:{{comment.body}} 
+    </p>
+    {% endfor %}
+  </div>
+  <div class="">
+    <form method="post" class="mx-20 mb-2 my-5">
+      {% csrf_token %}
+      <div class="rounded mr-10 py-2 text-green-700">
+        {{ comment_form.body }}
+        <button class="bg-green-500 text-white px-5 py-1" type="submit">
+        Add
+      </button>
+      </div>
+    </form>
+  </div>
+
 
 <!-- Display Interactions -->
 <h3>Interactions</h3>

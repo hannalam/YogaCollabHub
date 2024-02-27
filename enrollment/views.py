@@ -24,7 +24,7 @@ def enroll_confirmation(request, class_id):
     else:
         # If a GET (or any other method) we'll create a blank form
         enroll_forms = EnrollmentForm()
-    return render(request, 'enrollment/enroll_confirmation.html', {'enrollment': enrollment, 'enroll_forms':enroll_forms})
+    return render(request, 'users/index.html', {'enrollment': enrollment, 'enroll_forms':enroll_forms})
 
 
 @login_required
@@ -34,12 +34,6 @@ def enroll_class(request, class_id):
     # Create a new enrollment
     enroll = Enrollment.objects.create(student=request.user.profile, session=yoga_class)
     
-    # Check if the user is already enrolled in the class
-    #enrollment, created = Enrollment.objects.get_or_create(student=request.user.profile, session=yoga_class)
-    #if not created and enrollment.confirmed:
-        # If already enrolled and confirmed, redirect with a message indicating that
-        #messages.info(request, 'You are already enrolled in this class.')
-    
     if request.method == 'POST':
         # Create a form instance and populate it with data from the request
         enroll_form = EnrollmentForm(request.POST)
@@ -47,18 +41,17 @@ def enroll_class(request, class_id):
         # Check if the form is valid
         if enroll_form.is_valid():
             # Update the confirmed status based on form input
-            #enroll.confirmed = True
-            enroll.save()
+            enrollment = enroll_form.save(commit=False)
+            enrollment.student = request.user.profile
+            enrollment.session = yoga_class
+            enrollment.save()
 
             # Redirect to the dashboard upon successful enrollment confirmation
-            return redirect('dashboard')  # Replace 'dashboard' with the actual URL name for your dashboard page
+            return redirect('dashboard')  
 
     else:
-        # If a GET (or any other method) we'll create a blank form
         enroll_form = EnrollmentForm()
+        return redirect('dashboard')  
     return render(request, 'enrollment/enroll_confirmation.html', {'enroll': enroll, 'enroll_form':enroll_form})
 
-    # If not already enrolled or not confirmed, create a new enrollment
-    # and redirect to the confirmation page
-    #return redirect('enroll_confirmation', enrollment_id=enrollment.id)
 

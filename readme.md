@@ -30,3 +30,9 @@ pip install -r requirements.txt
 python manage.py runserver 127.0.0.1:8080
 
 # Reference of media used
+
+learn from: How to Build a Web Assistant Using Django and ChatGPT API in Python  
+https://thepythoncode.com/article/web-assistant-django-with-gpt3-api-python?utm_content=cmp-true
+
+certificate
+https://www.vinyasayogaashram.com/image/rys-200.jpg

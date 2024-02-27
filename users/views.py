@@ -1,29 +1,23 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, TutorRegistrationForm, tutorLoginForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Tutor
 from .forms import UserEditForm, ProfileEditForm, TutorEditForm, TutorProfileEditForm, TutorCertEditForm
-from session.models import YogaClass
 
 # user login request
 
 def user_login(request):
-    current_user = request.user
     if request.method == "POST":           #if the request method is post, this will give the access to the login form
         form = LoginForm(request.POST)
         if form.is_valid():                #check if the input is clean data
-            #data = form.cleaned_data
-            #user = authenticate(request, username=data['username'], password=data['password'])
-
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)       #login to the specific user
-                yoga_class = YogaClass.objects.all()
-                return render(request, 'session/class_list.html', {'yoga_class':yoga_class})
+                return redirect('profile')
             else:
                 return render(request, 'users/invalid_credentials.html')  
     
@@ -40,8 +34,7 @@ def tutor_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)       #login to the specific user
-                yoga_class = YogaClass.objects.all()
-                return render(request, 'session/class_list_tutor.html', {'yoga_class':yoga_class})
+                return redirect('tutorProfile')
             else:
                 return render(request, 'users/invalid_credentials.html')  
     else:
@@ -49,10 +42,7 @@ def tutor_login(request):
     return render(request, 'users/tutor_login.html', {'tutor_form':tutor_form})
 
 def index(request):
-    current_user = request.user
-    #yoga_class = YogaClass.objects.filter(user=current_user)
-    yoga_class = YogaClass.objects.all()
-    return render(request,'users/index.html', {'yoga_class':yoga_class})
+    return render(request,'users/index.html')
 
 def register(request):
     if request.method == 'POST':

@@ -108,7 +108,7 @@
           <!--Items-->
           <div class="flex">
             <div class="mr-10">
-              <a class="flex no-underline" href="{% url 'class_list'%}">
+              <a class="flex no-underline" href="{% url 'index'%}">
                 <img
                   class="h-8 w-8 mr-2"
                   src="{% static 'users/images/logo.png' %}"
@@ -146,6 +146,11 @@
       {% if request.user.is_authenticated %} {% if request.user.profile.user %}
       <!-- Content for normal users -->
 
+      <a href="{% url 'yogahub'%}">
+        <i class="material-icons">add_to_photos</i>
+        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Yoga Hub</span>
+      </a>
+
       <a href="{% url 'class_list'%}">
         <i class="material-icons">class</i>
         <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Classes</span>
@@ -165,6 +170,11 @@
         <i class="material-icons">inbox</i>
         <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Inbox</span>
       </a>
+
+      <a href="{% url 'notifications'%}">
+        <i class="material-icons">notifications</i>
+        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Notification</span>
+      </a>
       <a href="{% url 'chatrooms'%}">
         <i class="material-icons">chat</i>
         <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Live Chat</span>
@@ -173,11 +183,6 @@
       <a href="{% url 'aichatbot'%}">
         <i class="material-icons">forum</i>
         <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;AI chatbot</span>
-      </a>
-
-      <a href="{% url 'notifications'%}">
-        <i class="material-icons">notifications</i>
-        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Notification</span>
       </a>
 
       <a href="{% url 'settings' %}">
@@ -192,6 +197,11 @@
 
       {% else %}
       <!-- Content for tutors -->
+      <a href="{% url 'yogahub'%}">
+        <i class="material-icons">add_to_photos</i>
+        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Yoga Hub</span>
+      </a>
+
       <a href="{% url 'class_list_tutor'%}">
         <i class="material-icons">class</i>
         <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Classes</span>
@@ -217,6 +227,11 @@
         <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Inbox</span>
       </a>
 
+      <a href="{% url 'notifications'%}">
+        <i class="material-icons">notifications</i>
+        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Notification</span>
+      </a>
+
       <a href="{% url 'chatrooms'%}">
         <i class="material-icons">chat</i>
         <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Live Chat</span>
@@ -225,11 +240,6 @@
       <a href="{% url 'aichatbot'%}">
         <i class="material-icons">forum</i>
         <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;AI chatbot</span>
-      </a>
-
-      <a href="{% url 'notifications'%}">
-        <i class="material-icons">notifications</i>
-        <span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Notification</span>
       </a>
 
       <a href="{% url 'setting' %}">

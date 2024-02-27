@@ -1,6 +1,13 @@
 {% extends 'users/base.html' %} {% load static %} {% block body %}
 <div class="flex mt-5 p-5 justify-center">
-  <h1 class="text-3xl font-normal mb-2 text-gray-500">Classes</h1>
+  <div class="flex user-container mb-2 my-5">
+    <h2 class="text-3xl font-norma m-10 text-gray-500">Edit Class</h2>
+    <a
+      class="bg-blue-700 text-white m-10 px-2 py-2"
+      href="{% url 'class_list_tutor'%}"
+      >Back to Class list</a
+    >
+  </div>
 </div>
 
 <div class="grid mx-60 p-5 grid-cols-1">
@@ -27,7 +34,7 @@
     </div>
 
     <br><br>
-        <div class="bg-blue-100 mx-20 my-2 font-bold text-lg p-5 shadow-md">
+    <div class="bg-blue-100 mx-20 my-2 font-bold text-lg p-5 shadow-md">
       <span>Class Materials</span>
     </div>
     
@@ -55,6 +62,8 @@
     </video>
       <div>{{yoga_class.video_material}}</div>
     </div>
+  
+    
 
   </br>
 
@@ -98,24 +107,24 @@
     }} & {{ interaction_t.liked_by_user.count }} Likes this {% endif %}
   </div>
 
-  <div>
-    <p class="text-gray-700 text-base">
-      {% for comment in interaction_t.session_comment.all %}
-      <b>{{comment.posted_by}}</b>:{{comment.body}} 
-    </p>
-    {% endfor %}
-  </div>
-  <div class="">
-    <form method="post" class="mx-20 mb-2 my-5">
-      {% csrf_token %}
-      <div class="rounded mr-10 py-2 text-green-700">
-        {{ comment_form_t.body }}
-        <button class="bg-green-500 text-white px-5 py-1" type="submit">
-        Add
-      </button>
-      </div>
-    </form>
-  </div>
+    <div>
+      <p class="text-gray-700 text-base">
+        {% for comment in interaction_t.session_comment.all %}
+        <b>{{comment.posted_by}}</b>:{{comment.body}} 
+      </p>
+      {% endfor %}
+    </div>
+    <div class="">
+      <form method="post" class="mx-20 mb-2 my-5">
+        {% csrf_token %}
+        <div class="rounded mr-10 py-2 text-green-700">
+          {{ comment_form_t.body }}
+          <button class="bg-green-500 text-white px-5 py-1" type="submit">
+          Add
+        </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 {% endblock %}
