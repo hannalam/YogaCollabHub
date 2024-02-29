@@ -1,11 +1,13 @@
-{% extends 'users/base.html' %} {% block body %}
+{% extends 'users/base.html' %} {% load static %} {% block body %}
 <div class="flex mt-5 p-10 justify-center">
   <div class="py-10 mx-10 justify-center">
-    <h1 class="text-3xl font-normal mb-2 text-gray-900">Yoga Collab Hub</h1>
-    <div class="block text-grey-700 text-m mb-2 mx-3 py-10">
-      <p>Yoga is more than just a physical practice</p>
-      <p>come explore, learn, and grow on your yoga journey</p>
-    </div>
+    <h1 class="text-3xl font-bold mb-2 text-gray-900">Yoga Collab Hub</h1>
+    <p class="mb-2 py-6 font-semibold text-xl">
+      Yoga is more than just a physical practice
+    </p>
+    <p class="mb-2 text-gray-600">
+      Come explore, learn, and grow on your yoga journey
+    </p>
   </div>
   <div class="py-10 mx-10 justify-center">
     <div div class="mb-2 py-3 justify-center">
@@ -31,6 +33,62 @@
         href="{% url 'tutorRegister'%}"
         >Tutor Sign up</a
       >
+    </div>
+  </div>
+</div>
+
+<div class="flex p-5 justify-center">
+  <div class="py-2 px-20 mx-10 justify-center">
+    <div class="py-5 justify-center">
+      <img
+        class="h-15 mr-2"
+        src="{% static 'users/images/hero-communityEngagement.jpg' %}"
+        alt="Community Engagement"
+      />
+      <!--Img from https://www.bentley.com/wp-content/uploads/hero-communityEngagement-v2.jpg-->
+      <h1 class="text-2xl font-bold mb-3">Community Engagement</h1>
+      Foster active participation and engagement among yoga enthusiasts by
+      providing a user-friendly platform where members can connect, interact,
+      and collaborate with each other.
+    </div>
+
+    <div class="py-5 justify-center">
+      <img
+        class="h-30 mr-2"
+        src="{% static 'users/images/CollaborationOpportunities.jpg' %}"
+        alt=""
+      />
+      <!--Img from https://miro.medium.com/v2/resize:fit:1024/1*1SyMH7W2fWbC_jwjZHI4vg.jpeg-->
+      <h1 class="text-2xl font-bold mb-3">Collaboration Opportunities</h1>
+      Create avenues for collaborative initiatives, such as yoga class
+      enrollment, and live chat events, to encourage members to join, and
+      inspire one another on their yoga journey.
+    </div>
+  </div>
+  <div class="py-2 mx-5 justify-center">
+    <div class="py-5 justify-center">
+      <img
+        class="h-30 mr-2"
+        src="{% static 'users/images/KnowledgeSharing.jpg' %}"
+        alt=""
+      />
+      <!--Img from https://lh3.googleusercontent.com/proxy/HjBuQU1RqD4lcb-0kwVXRCexZve-6s4jBztXAjnUH6Si2BHxrN2hoLVCY6iwVoIeI9Xl-1wpWuLtg2a-xc2ieSlqb_hrzU52vbAGMuD41dVZeEAlqwfh_A9FJ0wJr4Y-->
+      <h1 class="text-2xl font-bold mb-3">Knowledge Sharing</h1>
+      Serve as a comprehensive repository of yoga-related resources, including
+      tutorials, videos, and expert insights, to facilitate continuous learning
+      and knowledge sharing among practitioners of all levels.
+    </div>
+    <div class="py-5 justify-center">
+      <img
+        class="h-25 mr-2"
+        src="{% static 'users/images/Technology Integration.webp' %}"
+        alt=""
+      />
+      <!--Img from https://www.signitysolutions.com/hs-fs/hubfs/7100343%201(1)(1).png?width=367&height=354&name=7100343%201(1)(1).png-->
+      <h1 class="text-2xl font-bold mb-3">Technology Integration</h1>
+      Utilize innovative technologies, such as OpenAi for personalized
+      recommendations, to enhance the yoga experience and overcome logistical
+      barriers, making yoga accessible to a wider audience.
     </div>
   </div>
 </div>
