@@ -36,3 +36,41 @@ https://thepythoncode.com/article/web-assistant-django-with-gpt3-api-python?utm_
 
 certificate
 https://www.vinyasayogaashram.com/image/rys-200.jpg
+
+# Steps To Deploy on Amazon EC2
+
+Update the System
+
+`sudo dnf update -y`
+
+Install Git
+
+`sudo dnf install git -y`
+
+To get this repository, run the following command inside your git enabled terminal
+
+`git clone https://github.com/hannalam/YogaCollabHub.git`
+
+Install pip
+
+`sudo dnf install pip -y`
+
+Install Django
+
+`pip install django`
+
+Make Migrations
+
+`python3 manage.py makemigrations`
+
+Migrate
+
+`python3 manage.py migrate`
+
+Createsuperuser
+
+`python3 manage.py createsuperuser`
+
+Runserver
+
+`python3 manage.py runserver 0.0.0.0:8000`
