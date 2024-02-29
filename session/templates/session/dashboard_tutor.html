@@ -3,7 +3,15 @@
   <h1 class="text-3xl font-normal mb-2 text-gray-500">Dashboard</h1>
 </div>
 
-<div class="grid mx-60 p-5 grid-cols-1 border-4">
+<div class="flex mt-5 p-10 justify-center">
+  <nav id ="navbar">
+    <a class = "nav-link bg-gray-500 text-white my-5 px-5 py-2" href ="#classtype"> Class Type </a>
+    <a class = "nav-link bg-gray-500 text-white my-5 px-5 py-2" href="#myclass"> My Class </a>
+    <a class = "nav-link bg-gray-500 text-white my-5 px-5 py-2" href="#mypost"> My Post </a>
+  </nav>
+</div>
+
+<div id = "classtype" class="grid mx-60 p-5 grid-cols-1 border-4">
   <h3 class="font-bold text-lg">Yoga types</h3>
   <div class="shadow grid mx-60 p-10 grid-cols-1">
     {% for type in class_type %}
@@ -21,7 +29,7 @@
   </div>
 </div>
 
-<div class="grid mx-60 p-5 grid-cols-1 border-4">
+<div id = "myclass" class="grid mx-60 p-5 grid-cols-1 border-4">
   <h3 class="font-bold text-lg">My Classes</h3>
   {% for class in dashboard_t %}
   <div class="shadow grid mx-60 p-10 grid-cols-1">
@@ -59,4 +67,35 @@
   </div>
   {% endfor %}
 </div>
+
+<div id = "mypost" class="grid mx-60 p-10 grid-cols-1 border-4">
+  <h3 class="font-bold text-lg">My Post</h3>
+  <div class="flex mt-5 justify-center">
+    <div class="grid mx-10 grid-cols-1">
+        {% for state in tutorstatus %}
+        <!-- Status card starts here -->
+        <br href="#">
+            <div class="rounded overflow-hidden w-[370px] h-[370px] bg-white shadow-lg">
+                <div class="user-container flex mx-5 my-5">
+                    <img class="h-12 rounded-full" src="{{ state.user.tutor.profile_photo.url }}" alt="">
+                    <div class="mx-2 my-2 font-bold"><span class="text-blue-800">{{state.user}}</span></div>
+                </div>
+
+                <div>
+                    <div class="font-bold text-gray-800 text-l mb-1 px-6">{{state.title}}</div>
+                    <img class="h-80 px-4" src="{{state.image.url}}" alt="">
+                </div>
+
+                <div class="px-6 py-2">
+                    <p class="text-gray-900 text-base">{{state.caption}}</p>
+                    <p class="text-gray-900 text-base">{{state.date}}</p>
+                </div>
+            </div>
+        </br>
+          <!-- Status card ends here -->
+          {% endfor %}
+      </div>
+  </div>
+</div>
+
 {% endblock %}

@@ -22,10 +22,10 @@
   {% for class in classes %}
   <div class="bg-gray-100 p-5">
 
-    <div class="mx-20 my-2 font-bold text-lg p-5 shadow-md">
+    <div class="mx-20 my-2 font-bold text-lg p-5 shadow-md bg-white">
       <span>{{class.title}}</span>
     </div>
-    <div class="mx-20 my-2 p-5 shadow-md">
+    <div class="mx-20 my-2 p-5 bg-white shadow-md">
       <div> <strong>Type: </strong> {{class.class_type}}</div>
       <div> <strong>Tutor: </strong>{{class.tutor}}</div>
       <h4> <strong>Date: </strong>{{class.date}}</h4>
@@ -59,13 +59,9 @@
                 </li>
             {% endif %}
 
-            <li class="page-item active">
-                <a class="page-link bg-gray-100 p-3 mx-3 font-bold" href="?page={{ classes.number }}">Current</a>
-            </li>
-
             {% if classes.has_next %}
                 <li class="page-item">
-                    <a class="page-link bg-gray-100 p-3 my-3 font-bold" href="?page={{ classes.next_page_number }}">Next</a>
+                    <a class="page-link bg-gray-100 p-3 mx-3 font-bold" href="?page={{ classes.next_page_number }}">Next</a>
                 </li>
             {% endif %}
         </ul>

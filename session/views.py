@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import YogaClass, ClassType
 from enrollment.models import Enrollment
 from users.models import Profile, Tutor
-from interactions.models import Interaction
+from interactions.models import Interaction, Yogahub
 from .forms import SessionForm, EnrollmentForm, CommentForm, ClassEditForm, ClassTypeForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -146,9 +146,10 @@ def schedule_class(request, class_id):
 
 @login_required
 def dashboard(request):
-
     enrolled_classes = Enrollment.objects.filter(student=request.user.profile)
-    return render(request, 'session/dashboard.html', {'enrolled_classes':enrolled_classes})
+    loggedin_user = request.user
+    mystatus = Yogahub.objects.filter(user=loggedin_user)
+    return render(request, 'session/dashboard.html', {'enrolled_classes':enrolled_classes,'mystatus': mystatus})
 
 def delete_enrollment(request, enrollment_id):
     enrollment = get_object_or_404(Enrollment, pk=enrollment_id)
@@ -162,7 +163,8 @@ def dashboard_tutor(request):
     class_type = ClassType.objects.all()
     dashboard_t = YogaClass.objects.all()
     logged_user = request.user
-    return render(request, 'session/dashboard_tutor.html', {'dashboard_t':dashboard_t, 'logged_user':logged_user, 'class_type':class_type})
+    tutorstatus = Yogahub.objects.filter(user=logged_user)
+    return render(request, 'session/dashboard_tutor.html', {'dashboard_t':dashboard_t, 'logged_user':logged_user, 'class_type':class_type, 'tutorstatus':tutorstatus})
 
 def session_like(request):
     session_id = request.POST.get('session_id')

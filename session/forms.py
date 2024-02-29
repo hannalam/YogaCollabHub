@@ -15,8 +15,6 @@ class SessionForm(forms.ModelForm):
         model = YogaClass
         fields = ('title', 'class_type', 'tutor', 'date','time', 'classroom_equipment', 'description', 'location','image_material', 'audio_material', 'video_material',)
 
-    
-
 class EnrollmentForm(forms.ModelForm):
     class Meta:
         model = YogaClass

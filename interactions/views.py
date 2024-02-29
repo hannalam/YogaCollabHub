@@ -38,9 +38,16 @@ def new_post(request):
 
 @login_required
 def yogahub(request):
-    status = Yogahub.objects.all()
     logged_user = request.user
+    status = Yogahub.objects.all()
     return render(request, 'interactions/yogahub.html', {'status': status, 'logged_user':logged_user})
+
+@login_required
+def mypost(request):
+    loggedin_user = request.user
+    mystatus = Yogahub.objects.filter(user=loggedin_user).first()
+    #profile = Profile.objects.filter(user=loggedin_user).first()
+    return render(request, 'users/dashboard.html', {'mystatus': mystatus})
 
 @login_required
 def notifications(request):
