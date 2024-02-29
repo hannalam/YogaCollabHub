@@ -3,6 +3,8 @@ from .models import Enrollment
 from session.models import YogaClass 
 from .forms import EnrollmentForm
 from django.contrib.auth.decorators import login_required
+from rest_framework import viewsets
+from users.serializers import EnrollmentSerializer
 
 @login_required
 def enroll_confirmation(request, class_id):
@@ -54,4 +56,6 @@ def enroll_class(request, class_id):
         return redirect('dashboard')  
     return render(request, 'enrollment/enroll_confirmation.html', {'enroll': enroll, 'enroll_form':enroll_form})
 
-
+class EnrollmentViewSet(viewsets.ModelViewSet):
+    queryset = Enrollment.objects.all()
+    serializer_class = EnrollmentSerializer

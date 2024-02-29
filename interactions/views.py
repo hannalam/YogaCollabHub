@@ -4,7 +4,8 @@ from .models import Notification, Message, ChatRoom, ChatRoomMessage, Yogahub
 from .forms import MessageForm, YogaHubForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
+from rest_framework import viewsets
+from users.serializers import YogahubSerializer, ChatRoomSerializer, ChatRoomMessageSerializer, MessageSerializer, NotificationSerializer
 
 @login_required
 def inbox(request):
@@ -68,6 +69,26 @@ def chatroom(request, slug):
     return render(request, 'interactions/chatroom.html', {'chatroom': chatroom,'messages':messages})
     #return render(request, 'interactions/chatroom.html', {'chatroom': chatroom})
 
+class YogahubViewSet(viewsets.ModelViewSet):
+    queryset = Yogahub.objects.all()
+    serializer_class = YogahubSerializer
+
+class ChatRoomViewSet(viewsets.ModelViewSet):
+    queryset = ChatRoom.objects.all()
+    serializer_class = ChatRoomSerializer
+
+class ChatRoomMessageViewSet(viewsets.ModelViewSet):
+    queryset = ChatRoomMessage.objects.all()
+    serializer_class = ChatRoomMessageSerializer
+
+class MessageViewSet(viewsets.ModelViewSet):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+
+class NotificationViewSet(viewsets.ModelViewSet):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
+    
 
 
 # end of code I wrote

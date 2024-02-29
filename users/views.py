@@ -5,6 +5,8 @@ from .forms import LoginForm, UserRegistrationForm, TutorRegistrationForm, tutor
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Tutor
 from .forms import UserEditForm, ProfileEditForm, TutorEditForm, TutorProfileEditForm, TutorCertEditForm
+from rest_framework import viewsets
+from .serializers import ProfileSerializer, TutorSerializer
 
 # user login request
 
@@ -134,3 +136,12 @@ def setting(request):
     loggedin_user = request.user
     tutor_setting = Tutor.objects.filter(user=loggedin_user)
     return render(request, 'users/setting.html', {'tutor_setting': tutor_setting})
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+class TutorViewSet(viewsets.ModelViewSet):
+    queryset = Tutor.objects.all()
+    serializer_class = TutorSerializer

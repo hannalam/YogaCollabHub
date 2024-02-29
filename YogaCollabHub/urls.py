@@ -18,7 +18,24 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-#from YogaCollabHub.YogaCollabHub.settings import MEDIA_URL, MEDIA_ROOT
+from rest_framework import routers
+from users.views import ProfileViewSet, TutorViewSet
+from session.views import ClassTypeViewSet, YogaClassViewSet
+from enrollment.views import EnrollmentViewSet
+from interactions.views import YogahubViewSet, ChatRoomViewSet, ChatRoomMessageViewSet, MessageViewSet, NotificationViewSet
+
+router = routers.DefaultRouter()
+router.register('Profiles', ProfileViewSet)
+router.register('Tutors', TutorViewSet)
+router.register('Class Types', ClassTypeViewSet)
+router.register('Yoga Class', YogaClassViewSet)
+router.register('Enrollment', EnrollmentViewSet)
+router.register('Yoga Hub', YogahubViewSet)
+router.register('Chat Room', ChatRoomViewSet)
+router.register('Chat Room Message', ChatRoomMessageViewSet)
+router.register('Message', MessageViewSet)
+router.register('Notification', NotificationViewSet)
+
 
 
 urlpatterns = [
@@ -28,5 +45,6 @@ urlpatterns = [
     path('interactions/', include('interactions.urls')),
     path('enrollment/', include('enrollment.urls')),
     path('aichatbot/', include('aichatbot.urls')),
+    path('api/', include(router.urls)),
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

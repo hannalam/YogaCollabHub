@@ -6,6 +6,8 @@ from interactions.models import Interaction, Yogahub
 from .forms import SessionForm, EnrollmentForm, CommentForm, ClassEditForm, ClassTypeForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from rest_framework import viewsets
+from users.serializers import ClassTypeSerializer, YogaClassSerializer
 
 @login_required
 def class_list(request):
@@ -174,3 +176,11 @@ def session_like(request):
     else:
         session.liked_by_user.add(request.user)
     return redirect('dashboard')
+
+class ClassTypeViewSet(viewsets.ModelViewSet):
+    queryset = ClassType.objects.all()
+    serializer_class = ClassTypeSerializer
+
+class YogaClassViewSet(viewsets.ModelViewSet):
+    queryset = YogaClass.objects.all()
+    serializer_class = YogaClassSerializer
