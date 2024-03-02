@@ -74,3 +74,9 @@ Createsuperuser
 Runserver
 
 `python3 manage.py runserver 0.0.0.0:8000`
+
+Reload the update on AWS
+
+`git pull origin main`
+
+- This is the public ip for this project: http://13.48.127.8:8000/
