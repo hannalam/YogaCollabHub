@@ -2,48 +2,55 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import Profile, Tutor
 
-
+# Form for editing user details
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
 
+
+# Form for editing profile details
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('profile_photo','bio', 'location')
 
+
+# Form for editing tutor user details
 class TutorEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
 
+
+# Form for editing tutor profile details
 class TutorProfileEditForm(forms.ModelForm):
     class Meta:
         model = Tutor
         fields = ('profile_photo','bio', 'location')
 
+
+# Form for editing tutor certification details
 class TutorCertEditForm(forms.ModelForm):
     class Meta:
         model = Tutor
         fields = ['teaching_certificate']  
 
-# login form
 
+# Login form for regular users
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
-# tutor login form
 
+# Login form for tutors
 class tutorLoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
-# Registration Form
-    
-class UserRegistrationForm(forms.ModelForm):
 
+# Registration form for regular users
+class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
 
@@ -55,13 +62,12 @@ class UserRegistrationForm(forms.ModelForm):
         if self.cleaned_data['password']!= self.cleaned_data['password2']:
             raise forms.ValidationError('Password do not match')
         return self.cleaned_data['password2']
-    
-class TutorRegistrationForm(forms.ModelForm):
 
+
+# Registration form for tutors
+class TutorRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
-
-    #user_type = forms.ChoiceField(choices=[('student', 'Student'), ('tutor', 'Tutor')], widget=forms.RadioSelect)
 
     class Meta:
         model = User

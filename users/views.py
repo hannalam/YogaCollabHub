@@ -8,8 +8,43 @@ from .forms import UserEditForm, ProfileEditForm, TutorEditForm, TutorProfileEdi
 from rest_framework import viewsets
 from .serializers import ProfileSerializer, TutorSerializer
 
-# user login request
+# View for rendering index page
+def index(request):
+    return render(request,'users/index.html')
 
+# View for rendering invalid credentials page
+def invalid(request):
+    return render(request, 'users/invalid_credentials.html')
+
+# View for user registration
+def register(request):
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+        if user_form.is_valid():
+            new_user = user_form.save(commit=False)
+            new_user.set_password(user_form.cleaned_data['password'])
+            new_user.save()
+            Profile.objects.create(user=new_user)
+            return render(request, 'users/register_done.html')
+    else:   
+        user_form = UserRegistrationForm()
+    return render(request, 'users/register.html', {'user_form':user_form})
+
+# View for tutor registration
+def tutorRegister(request):
+    if request.method == 'POST':
+        tutor_form = TutorRegistrationForm(request.POST, request.FILES)
+        if tutor_form.is_valid():
+            new_user = tutor_form.save(commit=False)
+            new_user.set_password(tutor_form.cleaned_data['password'])
+            new_user.save()
+            Tutor.objects.create(user=new_user)
+            return render(request, 'users/register_done.html')
+    else:   
+        tutor_form = TutorRegistrationForm()
+    return render(request, 'users/tutorRegister.html', {'tutor_form':tutor_form})
+
+# View for user login
 def user_login(request):
     if request.method == "POST":           #if the request method is post, this will give the access to the login form
         form = LoginForm(request.POST)
@@ -27,6 +62,7 @@ def user_login(request):
         form = LoginForm()
     return render(request, 'users/login.html', {'form':form})
 
+# View for tutor login
 def tutor_login(request):
     if request.method == "POST":           #if the request method is post, this will give the access to the login form
         tutor_form = tutorLoginForm(request.POST)
@@ -43,35 +79,7 @@ def tutor_login(request):
         tutor_form = tutorLoginForm()
     return render(request, 'users/tutor_login.html', {'tutor_form':tutor_form})
 
-def index(request):
-    return render(request,'users/index.html')
-
-def register(request):
-    if request.method == 'POST':
-        user_form = UserRegistrationForm(request.POST)
-        if user_form.is_valid():
-            new_user = user_form.save(commit=False)
-            new_user.set_password(user_form.cleaned_data['password'])
-            new_user.save()
-            Profile.objects.create(user=new_user)
-            return render(request, 'users/register_done.html')
-    else:   
-        user_form = UserRegistrationForm()
-    return render(request, 'users/register.html', {'user_form':user_form})
-
-def tutorRegister(request):
-    if request.method == 'POST':
-        tutor_form = TutorRegistrationForm(request.POST, request.FILES)
-        if tutor_form.is_valid():
-            new_user = tutor_form.save(commit=False)
-            new_user.set_password(tutor_form.cleaned_data['password'])
-            new_user.save()
-            Tutor.objects.create(user=new_user)
-            return render(request, 'users/register_done.html')
-    else:   
-        tutor_form = TutorRegistrationForm()
-    return render(request, 'users/tutorRegister.html', {'tutor_form':tutor_form})
-
+# View for editing user profile
 @login_required
 def edit(request):
     loggedin_user = request.user
@@ -88,6 +96,7 @@ def edit(request):
         profile_form = ProfileEditForm(instance=request.user.profile)
     return render(request, 'users/edit.html', {'user_form':user_form, 'profile_form':profile_form, 'edit_profile':edit_profile})
 
+# View for editing tutor profile
 @login_required
 def tutorEdit(request):
     loggedin_user = request.user
@@ -108,12 +117,14 @@ def tutorEdit(request):
         cert_form = TutorCertEditForm(instance=request.user)
     return render(request, 'users/tutorEdit.html', {'tutor_user_form':tutor_user_form, 'tutor_profile_form':tutor_profile_form, 'tutor_edit_profile':tutor_edit_profile, 'cert_form':cert_form})
 
+# View for user profile
 @login_required
 def profile(request):
     loggedin_user = request.user
     profile = Profile.objects.filter(user=loggedin_user)
     return render(request, 'users/profile.html', {'profile': profile})
 
+# View for tutor profile
 @login_required
 def tutorProfile(request):
     loggedin_user = request.user
@@ -121,16 +132,14 @@ def tutorProfile(request):
     tutorCert = Tutor.objects.filter(user=loggedin_user)
     return render(request, 'users/tutorProfile.html', {'tutorProfile': tutorProfile, 'tutorCert':tutorCert})
 
-
-def invalid(request):
-    return render(request, 'users/invalid_credentials.html')
-
+# View for user settings
 @login_required
 def settings(request):
     loggedin_user = request.user
     profile_setting = Profile.objects.filter(user=loggedin_user)
     return render(request, 'users/settings.html', {'profile_setting': profile_setting})
 
+# View for tutor settings
 @login_required
 def setting(request):
     loggedin_user = request.user
@@ -138,10 +147,12 @@ def setting(request):
     return render(request, 'users/setting.html', {'tutor_setting': tutor_setting})
 
 
+# Viewset for Profile model
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
+# Viewset for Tutor model
 class TutorViewSet(viewsets.ModelViewSet):
     queryset = Tutor.objects.all()
     serializer_class = TutorSerializer

@@ -1,16 +1,17 @@
 {% extends 'users/base.html' %} {% load static %} {% block body %}
 <div class="flex mt-5 p-5 justify-center">
   <div class="flex user-container mb-2 px-20 my-5">
-    <h2 class="text-3xl font-norma m-10 text-gray-500">Classes</h2>
+    <h2 class="text-3xl font-norma m-10 text-gray-500">Classes</h2>    <!-- Heading for the classes section -->
   </div>
 </div>
 
-<form class="grid mx-60 p-5 grid-cols-2">
+<form class="grid mx-60 p-5 grid-cols-2">  <!-- Search form -->
     <div>
         <input type="search" name="class_name" placeholder="Search for class" class="bg-gray-50 shadow-md text-white mx-5 my-5 px-5 py-2">
         <button id="{{classes.id}}" class="bg-green-500 text-white my-5 px-5 py-2" type="submit">Search</button>
     </div>
 
+    <!-- Link to go back to class list -->
     <a
       class="bg-gray-200 text-black m-5 px-20 py-2 font-bold"
       href="{% url 'class_list'%}"
@@ -18,21 +19,21 @@
     >
 </form>
 
-<div class="grid mx-60 p-10 grid-cols-1 ">
+<div class="grid mx-60 p-10 grid-cols-1 ">    <!-- Displaying class details -->
   {% for class in classes %}
   <div class="bg-gray-100 p-5">
 
     <div class="mx-20 my-2 font-bold text-lg p-5 shadow-md bg-white">
       <span>{{class.title}}</span>
     </div>
-    <div class="mx-20 my-2 p-5 bg-white shadow-md">
+    <div class="mx-20 my-2 p-5 bg-white shadow-md">   <!-- Type, Tutor, Date, and Time -->
       <div> <strong>Type: </strong> {{class.class_type}}</div>
       <div> <strong>Tutor: </strong>{{class.tutor}}</div>
       <h4> <strong>Date: </strong>{{class.date}}</h4>
       <h4> <strong>Time: </strong>{{class.time}}</h4>
     </div>
 
-    <div class="user-container mx-20 mb-2 my-5">
+    <div class="user-container mx-20 mb-2 my-5">   <!-- View Details link -->
       <a
         class="bg-blue-700 text-white my-5 px-5 py-2"
         href="{% url 'class_detail_student' class.id %}"
@@ -49,17 +50,17 @@
   {% endfor %}
 </div>
 
-<div class="grid mx-60 p-5 grid-cols-1 ">
+<div class="grid mx-60 p-5 grid-cols-1 ">   <!-- Pagination -->
   <div class="row">
     <div class="col-md-3 offset-md-4">
         <ul class="pagination">
-            {% if classes.has_previous %}
+            {% if classes.has_previous %}     <!-- Link to previous page -->
                 <li class="page-item">
                     <a class="page-link bg-gray-100 p-3 mx-3 font-bold" href="?page={{ classes.previous_page_number }}">Previous</a>
                 </li>
             {% endif %}
 
-            {% if classes.has_next %}
+            {% if classes.has_next %}      <!-- Link to next page -->
                 <li class="page-item">
                     <a class="page-link bg-gray-100 p-3 mx-3 font-bold" href="?page={{ classes.next_page_number }}">Next</a>
                 </li>

@@ -1,6 +1,7 @@
 {% extends 'users/base.html' %} {% load static %} {% block body %}
 <div class="flex mt-5 p-5 justify-center">
   <div class="flex user-container mb-2 my-5">
+    <!-- Heading for editing a class and link to go back to class list -->
     <h2 class="text-3xl font-norma m-10 text-gray-500">Edit Class</h2>
     <a
       class="bg-blue-700 text-white m-10 px-2 py-2"
@@ -10,13 +11,14 @@
   </div>
 </div>
 
+<!-- Displaying class details -->
 <div class="grid mx-60 p-5 grid-cols-1">
   <div class="bg-gray-300 p-5">
         <div class="bg-blue-100 mx-20 my-2 font-bold text-lg p-5 shadow-md">
       <span>{{yoga_class_detail.title}}</span>
     </div>
 
-    <div class="mx-20 my-2 p-5 bg-gray-50 shadow-md">
+    <div class="mx-20 my-2 p-5 bg-gray-50 shadow-md">    <!-- Type, Tutor, Date, Time, and Location -->
       <div> <strong>Type: </strong> {{yoga_class_detail.class_type}}</div>
       <div> <strong>Tutor: </strong>{{yoga_class_detail.tutor}}</div>
       <h4> <strong>Date: </strong>{{yoga_class_detail.date}}</h4>
@@ -33,6 +35,7 @@
     </div>
 
     <br><br>
+    <!-- Displaying Class Materials: Image, Audio, and Video -->
     <div class="bg-blue-100 mx-20 my-2 font-bold text-lg p-5 shadow-md">
       <span>Class Materials</span>
     </div>
@@ -63,10 +66,10 @@
     </div>
 
   </br>
-
+  <!-- Interaction buttons: Like, Comment, Share -->
   <div class="px-3 py-4 mx-20 mb-2">
     <div class="icon-container flex gap-3">
-      <a id="{{session.id}}" class="btn-like">
+      <a id="{{session.id}}" class="btn-like">    <!-- Like button -->
         {% if logged_user in interaction.liked_by_user.all %}
         <img
           class="w-5 h-5"
@@ -81,14 +84,14 @@
         />
         {% endif %}
       </a>
-      <a>
+      <a>  <!-- Comment button -->
         <img
           class="w-5 h-5"
           src="{% static 'users/images/comment.png' %}"
           alt="https://www.iconfinder.com/icons/8664929/comment_chat_message_icon"
         />
       </a>
-      <a>
+      <a>  <!-- Share button -->
         <img
           class="w-5 h-5"
           src="{% static 'users/images/share.png' %}"
@@ -96,6 +99,7 @@
         />
       </a>
     </div>
+    <!-- Displaying number of likes and users who liked -->
     {% if interaction.liked_by_user.count < 1 %} {% elif
     interaction.liked_by_user.count == 1 %} {{
     interaction.liked_by_user.first }} Likes this {% elif
@@ -145,7 +149,7 @@
 </form>
 
 </div>
-<script type="text/javascript">
+<script type="text/javascript">   // JavaScript code for handling like button click
   window.CSRF_TOKEN = "{{ csrf_token }}";
   $(document).on("click", ".btn-like", function () {
     console.log("This is working");

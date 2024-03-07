@@ -3,11 +3,11 @@
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
   rel="stylesheet"
 />
-<div class="row justify-content-center my-4">
+<div class="row justify-content-center my-4"> <!-- Creating a row with centered content -->
   <div class="col-md-7 mt-4">
-    <h1>Page Not Found</h1>
-    <p>Make sure you are connected to the internet or your query is correct</p>
-    <a href="{% url 'aichatbot' %}" class="btn btn-secondary">Go Home</a>
+    <h1>Page Not Found</h1> <!-- Heading for page not found message -->
+    <p>Make sure you are connected to the internet or your query is correct</p> <!-- Explanation for page not found -->
+    <a href="{% url 'aichatbot' %}" class="btn btn-secondary">Go Home</a> <!-- Link to go back to home page -->
   </div>
 </div>
 {% endblock %}

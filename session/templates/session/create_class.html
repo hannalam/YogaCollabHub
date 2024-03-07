@@ -3,6 +3,7 @@
   How to Use Date Picker with Django https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html 
 -->
 <head>
+  <!-- Include necessary CSS and JS libraries for date-time picker -->
   <!-- Bootstrap 4 -->
   <link
     rel="stylesheet"
@@ -50,35 +51,32 @@
     crossorigin="anonymous"
   ></script>
 </head>
+
+<!-- Main content starts here -->
 <div class="flex mt-3 justify-center">
-  <div>
+  <div>   <!-- Heading for creating yoga class type -->
     <h2 class="text-2xl m-10 font-bold">Create yoga class type</h2>
     <a
       class="bg-green-500 text-white m-10 px-5 py-2"
       href="{% url 'add_class_type'%}"
       >Click here</a
     >
+    <h3 class="font-bold text-lg m-3 px-4 py-2">The yoga types we have now:</h3>   <!-- Display existing yoga class types -->
+    {% for type in types %}
+    <div class="mx-10 my-2 font-bold p-3 shadow-md">
+      <span class="justify-between">{{type.name}}</span>
+    </div>
+    {% endfor %}
 
-
-      <h3 class="font-bold text-lg m-3 px-4 py-2">The yoga types we have now:</h3>
-      {% for type in types %}
-      <div class="mx-10 my-2 font-bold p-3 shadow-md">
-        <span class="justify-between">{{type.name}}</span>
-      </div>
-      {% endfor %}
-
-
-      <br><br>
-
-
-    <h2 class="text-2xl m-5 font-bold">Create a yoga class 🧘</h2>
+    <br><br>
+    <h2 class="text-2xl m-5 font-bold">Create a yoga class 🧘</h2>  <!-- Form for creating a new yoga class -->
     <div class="container py-2 mx-10">
       <form
         method="POST"
         class="bg-white shadow-md mx-10 px-8 rounded pt-6 pb-8 mb-4 w-4/5"
         enctype="multipart/form-data"
       >
-        {% csrf_token %}
+        {% csrf_token %}     <!-- Input fields for class title, type, tutor, date & time, classroom equipment, description, and location -->
         <div class="mb-2">
           <label class="block text-grey-700 text-sm font-bold mb-2" for=""
             >Title</label
@@ -168,52 +166,17 @@
           </div>
         </div>
 
-        <!--
-        <div class="mb-2">
-          <label class="block text-grey-700 text-sm font-bold mb-2" for=""
-            >Image:
-          </label>
-          <div
-            class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
-          >
-            {{form.image_material}}
-          </div>
-        </div>
-
-        <div class="mb-2">
-          <label class="block text-grey-700 text-sm font-bold mb-2" for=""
-            >Audio:
-          </label>
-          <div
-            class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
-          >
-            {{form.audio_material}}
-          </div>
-        </div>
-
-        <div class="mb-2">
-          <label class="block text-grey-700 text-sm font-bold mb-2" for=""
-            >Video:
-          </label>
-          <div
-            class="shadow appearance-none border rounded py-2 px-3 mr-10 text-grey-700"
-          >
-            {{form.video_material}}
-          </div>
-        </div>
-        -->
-
-        <button type="submit" class="bg-green-500 text-white my-5 px-5 py-2">
+        <button type="submit" class="bg-green-500 text-white my-5 px-5 py-2">   <!-- Submit button -->
           Create
         </button>
       </form>
+      </div>
     </div>
-
-    
   </div>
 </div>
-</div>
-<script>
+
+<!-- JavaScript for initializing date-time picker -->
+<script>   
   $(function () {
     $("#datetimepicker1").datetimepicker({
       format: "DD/MM/YYYY HH:mm",

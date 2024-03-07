@@ -1,5 +1,6 @@
 {% extends 'users/base.html' %} {% block body %}
 <head>
+  <!-- Include necessary CSS and JS libraries for date-time picker -->
   <!-- Bootstrap 4 -->
   <link
     rel="stylesheet"
@@ -48,10 +49,11 @@
   ></script>
 </head>
 
+<!-- Main content starts here -->
 <div class="flex mt-5 p-10 justify-center">
   <div class="py-5 mx-10 justify-center">
     <div class="flex user-container mb-2 my-5">
-      <h2 class="text-2xl m-10 font-bold">Edit Class</h2>
+      <h2 class="text-2xl m-10 font-bold">Edit Class</h2>   <!-- Edir class -->
       <a
         class="bg-blue-700 text-white m-10 px-2"
         href="{% url 'dashboard_tutor'%}"
@@ -59,7 +61,7 @@
       >
       </div>
       <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %} 
+        {% csrf_token %}   <!-- Input fields for class title, type, tutor, date & time, classroom equipment, description, and location -->
         <div class="mb-2">
           <label class="block text-grey-700 text-sm font-bold mb-2" for=""
             >Title: </label
@@ -170,10 +172,12 @@
             {{edit_form.video_material}}
           </div>
         </div>
-        <button class="bg-green-500 text-white my-5 px-5 py-2" type="submit">Sumbit</button>
+        <button class="bg-green-500 text-white my-5 px-5 py-2" type="submit">Sumbit</button>  <!-- Submit button -->
       </form>
     </div>
   </div>
+
+  <!-- JavaScript for initializing date-time picker -->
   <script>
   $(function () {
     $("#datetimepicker1").datetimepicker({

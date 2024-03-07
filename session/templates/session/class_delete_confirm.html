@@ -3,9 +3,12 @@
   <h1 class="text-3xl font-normal mb-2 text-gray-500">Delete Yoga Class</h1>
   <div class="grid mx-60 p-10 grid-cols-1">
     <div class="bg-gray-300 p-5">
+      <!-- Confirmation message -->
       <p>Are you sure you want to delete this yoga class?</p>
+      <!-- Form for deleting the yoga class -->
       <form method="post">
         {% csrf_token %}
+        <!-- Submit button to confirm deletion -->
         <input type="submit" value="Delete" />
       </form>
     </div>

@@ -7,6 +7,7 @@ from django.utils.text import slugify
 
 # I wrote this code
 
+# Model for interactions between users and yoga classes
 class Interaction(models.Model):
     yoga_class = models.ForeignKey(YogaClass, on_delete=models.CASCADE)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='liked_interactions')
@@ -17,7 +18,9 @@ class Interaction(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.yoga_class}"
-    
+
+
+# Model for comments on interactions
 class Comment(models.Model):
     session_comment = models.ForeignKey(Interaction, on_delete=models.CASCADE, related_name='session_comment')
     body = models.CharField(max_length=100)
@@ -30,12 +33,16 @@ class Comment(models.Model):
     def __str__(self):
         return self.body
     
+
+# Model for private messages between users
 class Message(models.Model):
     sender = models.ForeignKey(User, related_name='sent_messages', on_delete=models.CASCADE)
     receiver = models.ForeignKey(User, related_name='received_messages', on_delete=models.CASCADE)
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
+
+# Model for user notifications
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField()
@@ -43,20 +50,19 @@ class Notification(models.Model):
     is_read = models.BooleanField(default=False)
 
 
-# model for chatroom setup
+# Model for chatrooms
 class ChatRoom(models.Model):
 
-    # show the chatroom name in the admin page
     def __str__(self):
         return self.name
 
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
 
-# model for chatroom message setup
+
+# Model for messages within chatrooms
 class ChatRoomMessage(models.Model):
 
-    # show the messages in the admin page
     def __str__(self):
         return self.messages
 
@@ -68,6 +74,8 @@ class ChatRoomMessage(models.Model):
     class Meta:
         ordering = ('date',)
 
+
+# Model for yoga-related content
 class Yogahub(models.Model):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -75,19 +83,11 @@ class Yogahub(models.Model):
     image = models.ImageField(upload_to='images/%Y/%M/%D')
     title = models.CharField(max_length=100)
     caption = models.TextField(blank=True)
-    #slug = models.SlugField(max_length=100, blank=True)
     date = models.DateField(auto_now_add=True)
     likes = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name='likecount', blank=True)
 
-    # show the status title in the admin page
     def __str__(self):
         return self.title
-
-    # save the slug
-    #def save(self, *args, **kwargs):
-        #if not self.slug:
-            #self.slug = slugify(self.title)
-        #super().save(*args, **kwargs)
 
 # end of code I wrote

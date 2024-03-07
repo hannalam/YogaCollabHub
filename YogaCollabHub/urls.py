@@ -24,6 +24,8 @@ from session.views import ClassTypeViewSet, YogaClassViewSet
 from enrollment.views import EnrollmentViewSet
 from interactions.views import YogahubViewSet, ChatRoomViewSet, ChatRoomMessageViewSet, MessageViewSet, NotificationViewSet
 
+
+# Define a router for registering viewsets with default routes
 router = routers.DefaultRouter()
 router.register('Profiles', ProfileViewSet)
 router.register('Tutors', TutorViewSet)
@@ -37,14 +39,15 @@ router.register('Message', MessageViewSet)
 router.register('Notification', NotificationViewSet)
 
 
-
+# Define urlpatterns for routing URLs to views
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('users.urls')),
-    path('session/', include('session.urls')),
-    path('interactions/', include('interactions.urls')),
-    path('enrollment/', include('enrollment.urls')),
-    path('aichatbot/', include('aichatbot.urls')),
-    path('api/', include(router.urls)),
+    path('admin/', admin.site.urls),                        # Admin site URL
+    path('', include('users.urls')),                        # Include URLs from the users app
+    path('session/', include('session.urls')),              # Include URLs from the session app
+    path('interactions/', include('interactions.urls')),    # Include URLs from the interactions app
+    path('enrollment/', include('enrollment.urls')),        # Include URLs from the enrollment app
+    path('aichatbot/', include('aichatbot.urls')),          # Include URLs from the aichatbot app
+    path('api/', include(router.urls)),                     # Include API URLs registered with the router
 ] 
+# Serve media files during development
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -5,20 +5,21 @@
     rel="stylesheet"
   />
 </head>
-<div class="row justify-content-center my-4">
-  <div class="col-md-7 mt-4">
-    <div class="card">
-      <h1 class="card-header text-center">Ai Chatbot</h1>
+<div class="row justify-content-center my-4"> <!-- Creating a row with centered content -->
+  <div class="col-md-7 mt-4"> <!-- Creating a column with medium size -->
+    <div class="card"> <!-- Creating a card -->
+      <h1 class="card-header text-center">Ai Chatbot</h1> 
       <div class="card-body">
-        <div class="d-flex justify-content-end">
-          <button
+        <div class="d-flex justify-content-end">  <!-- Creating a flex container with end alignment -->
+          <button 
             type="button"
-            class="btn btn-primary mb-3"
+            class="btn btn-primary mb-3" 
             onclick="location.href=''"
           >
-            New Chat +
-          </button>
+            New Chat + <!-- Button to start a new chat -->
+          </button> 
         </div>
+        <!-- Chat history -->
         <div class="chat-history mb-3">
           {% for message in messages %}
           <div
@@ -33,20 +34,11 @@
         <form action="." method="POST">
           <!-- this secures the form from malicious attacks during submission -->
           {% csrf_token %}
-          <input
-            class="form-control mb-2"
-            required
-            type="text"
-            autofocus="autofocus"
-            name="prompt"
-            value="{{ prompt }}"
-            id=""
-          />
-          <label for="temperature" class="form-label"></label>
+
+          <label for="temperature" class="form-label"></label> <!-- Label for temperature input -->
             <strong> Temperature:</strong>   </label
           >
-            <div class="mx-2 m-3"> 0.0 👈 More conservative 🗯️ </div>
-            <div class="mx-2 m-3"> 1.0 👈 More diverse 🗯️</div>
+            
           <input
             class="form-control mb-2"
             type="number"
@@ -57,6 +49,19 @@
             value="{{ temperature }}"
             id="temperature"
           />
+          <!-- Temperature range -->
+          <div class="mx-2 m-3"> 0.0 👈 More conservative 🗯️ </div>
+            <div class="mx-2 m-3"> 1.0 👈 More diverse 🗯️</div>
+          <input
+          class="form-control mb-2"
+          required
+          type="text"
+          autofocus="autofocus"
+          name="prompt"
+          value="{{ prompt }}"
+          id=""
+        />
+        <!-- Submit button -->
           <button class="btn btn-success fw-bold" type="submit">
             GENERATE
           </button>

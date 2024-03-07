@@ -1,15 +1,16 @@
 {% extends 'users/base.html' %} {% load static %} {% block body %}
-<div class="flex mt-5 p-10 justify-center">
-  <h1 class="text-3xl font-normal mb-2 text-gray-500">Dashboard</h1>
+<div class="flex mt-5 p-10 justify-center">  <!-- The dashboard layout starts here -->
+  <h1 class="text-3xl font-normal mb-2 text-gray-500">Dashboard</h1>   <!-- Title for the dashboard -->
 </div>
 
-<div class="flex mt-5 p-10 justify-center">
-  <nav id ="navbar">
+<div class="flex mt-5 p-10 justify-center">   
+  <nav id ="navbar">  <!-- Navigation menu for different sections of the dashboard -->
     <a class = "nav-link bg-gray-500 text-white my-5 px-5 py-2" href ="#enrolled"> Enrolled Classes </a>
     <a class = "nav-link bg-gray-500 text-white my-5 px-5 py-2" href="#mypost"> My Post </a>
   </nav>
 </div>
 
+<!-- Section for displaying enrolled classes -->
 <div id = "enrolled" class="grid mx-60 p-10 grid-cols-1 border-4">
   <h3 class="font-bold text-lg">Enrolled Classes</h3>
   <div class="shadow grid mx-60 p-10 grid-cols-1">
@@ -38,19 +39,32 @@
   </div>
 </div>
 
+<!-- Section for displaying user's posts -->
 <div id = "mypost" class="grid mx-60 p-10 grid-cols-1 border-4">
   <h3 class="font-bold text-lg">My Post</h3>
   <div class="flex mt-5 justify-center">
     <div class="grid mx-10 grid-cols-1">
         {% for state in mystatus %}
-        <!-- Status card starts here -->
+        <!-- Display user's posts -->
         <br href="#">
             <div class="rounded overflow-hidden w-[370px] h-[370px] bg-white shadow-lg">
-                <div class="user-container flex mx-5 my-5">
+                <div class="user-container flex mx-5 my-5">  <!-- Display user's profile photo and name -->
                     <img class="h-12 rounded-full" src="{{ state.user.profile.profile_photo.url }}" alt="">
                     <div class="mx-2 my-2 font-bold"><span class="text-blue-800">{{state.user}}</span></div>
+
+                    <div class="relative  w-52 ...">   <!-- Links to edit and delete posts -->          
+                      <a
+                        class="absolute top-0 right-7 h-9 w-20 ...relative bg-blue-700 text-white p-2 "
+                        href="{% url 'edit_yogahub' state.id %}" 
+                        >Edit</a>
+                        <a
+                        class="absolute top-0 right-0 h-9 w-26 ...relative bg-red-700 text-white p-2"
+                        href="{% url 'delete_yogahub' state.id %}"
+                        >Delete</a>
+                    </div>
                 </div>
 
+                 <!-- Display post title, image, caption, and date -->
                 <div>
                     <div class="font-bold text-gray-800 text-l mb-1 px-6">{{state.title}}</div>
                     <img class="h-80 px-4" src="{{state.image.url}}" alt="">
@@ -62,7 +76,7 @@
                 </div>
             </div>
         </br>
-          <!-- Status card ends here -->
+          <!-- End of post display -->
           {% endfor %}
       </div>
   </div>

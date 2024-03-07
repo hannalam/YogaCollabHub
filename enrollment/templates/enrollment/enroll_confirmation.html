@@ -1,25 +1,25 @@
 {% extends 'users/base.html' %} {% load static %} {% block body %}
 <div class="flex mt-5 p-5 justify-center">
   <h1 class="text-3xl font-normal mb-2 text-gray-500">
-    Enrollment Confirmation
+    Enrollment Confirmation <!-- Heading for enrollment confirmation -->
   </h1>
 </div>
 <div class="grid mx-60 p-5 grid-cols-2">
-  <p class="text-2xl font-normal mb-2">{{ enroll.student }}</p>
+  <p class="text-2xl font-normal mb-2">{{ enroll.student }}</p> <!-- Displaying student name -->
 </div>
 <div class="grid mx-60 p-5 grid-cols-2">
-  <p class="text-lg font-normal text-gray-400">You are about to enroll in</p>
+  <p class="text-lg font-normal text-gray-400">You are about to enroll in</p> <!-- Message -->
 </div>
 <div class="grid mx-60 p-5 grid-cols-2">
-  <p class="text-2xl font-normal mb-2">{{ enroll.session.title }}</p>
+  <p class="text-2xl font-normal mb-2">{{ enroll.session.title }}</p> <!-- Displaying session title -->
 </div>
 
 <form class="grid mx-60 p-5 py-20 grid-cols-2">
   <div>
     {% csrf_token %}
-    <p class="text-lg font-normal">Confirmed: {{ enroll_form.confirmed }}</p>
+    <p class="text-lg font-normal">Confirmed: {{ enroll_form.confirmed }}</p> <!-- Confirmation status -->
     <button class="bg-green-500 text-white my-5 px-5 py-2" type="submit">
-      Confirm Enrollment
+      Confirm Enrollment <!-- Button to confirm enrollment -->
     </button>
   </div>
 </form>

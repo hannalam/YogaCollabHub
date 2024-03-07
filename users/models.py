@@ -1,10 +1,10 @@
 from django.db import models
 from django.conf import settings
 
-# Create your models here.
-
+# Profile model to store user profiles
 class Profile(models.Model):
-    '''
+    '''   
+    #This was the option I had when designing the users
     USER_TYPE_CHOICES = [
         ('student', 'Student User'),
         ('tutor', 'Tutor User'),
@@ -14,7 +14,6 @@ class Profile(models.Model):
     profile_photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
     bio = models.TextField(null=True, blank=True)
     location = models.CharField(max_length=100, null=True, blank=True)
-    #user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, default='student')
     tutor = models.ForeignKey('Tutor', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
@@ -25,15 +24,14 @@ class Profile(models.Model):
     @property
     def get_name(self):
         return self.user.first_name+" "+self.user.last_name
-    
+
+# Tutor model to represent users who are tutors
 class Tutor(models.Model):
-    #user_profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     profile_photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
     bio = models.TextField(null=True, blank=True)
     location = models.CharField(max_length=100, null=True, blank=True)
     teaching_certificate = models.FileField(upload_to='tutor/certificates/', blank=True, null=True)
-    # Other fields specific to tutors
 
     def __str__(self):
         return self.user.username

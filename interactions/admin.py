@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Interaction, Comment, Message, Notification, ChatRoom, ChatRoomMessage, Yogahub
 
-#Custom Fields
+#Custom admin configurations for each model
 class MessageAdmin(admin.ModelAdmin):
     list_display = ('sender', 'receiver', 'content', 'timestamp')
 
@@ -17,6 +17,8 @@ class ChatRoomMessageAdmin(admin.ModelAdmin):
 class YogahubAdmin(admin.ModelAdmin):
     list_display = ('user', 'image', 'title', 'caption', 'date')
 
+
+# Registering models with their respective admin configurations
 admin.site.register(Interaction)
 admin.site.register(Comment)
 admin.site.register(Message, MessageAdmin)
