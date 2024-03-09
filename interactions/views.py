@@ -69,13 +69,6 @@ def chatroom(request, slug):
     messages = ChatRoomMessage.objects.filter(chatroom=chatroom)[0:30]
     return render(request, 'interactions/chatroom.html', {'chatroom': chatroom,'messages':messages})
 
-# View for deleting a Yogahub post
-@login_required
-def delete_yogahub(request, yogahub_id):
-    yogahub = get_object_or_404(Yogahub, pk=yogahub_id)
-    yogahub.delete()
-    return redirect('dashboard_tutor')
-
 # View for editing a Yogahub post
 @login_required
 def edit_yogahub(request, yogahub_id):
@@ -88,6 +81,13 @@ def edit_yogahub(request, yogahub_id):
     else:
         editpostform = YogahubEditForm(instance=request.user)
     return render(request, 'interactions/editpost.html', {'editpostform': editpostform, 'edit_post':edit_post})
+
+# View for deleting a Yogahub post
+@login_required
+def delete_yogahub(request, yogahub_id):
+    yogahub = get_object_or_404(Yogahub, pk=yogahub_id)
+    yogahub.delete()
+    return redirect('dashboard_tutor')
 
 
 # ViewSet for Yogahub model

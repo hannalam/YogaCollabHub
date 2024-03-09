@@ -56,6 +56,7 @@ def enroll_class(request, class_id):
         return redirect('dashboard')  
     return render(request, 'enrollment/enroll_confirmation.html', {'enroll': enroll, 'enroll_form':enroll_form})
 
+# ViewSet for Enrollment model
 class EnrollmentViewSet(viewsets.ModelViewSet):
     queryset = Enrollment.objects.all()
     serializer_class = EnrollmentSerializer

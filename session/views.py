@@ -10,6 +10,34 @@ from rest_framework import viewsets
 from users.serializers import ClassTypeSerializer, YogaClassSerializer
 
 
+# View for adding a new class type
+def add_class_type(request):
+    if request.method == 'POST':
+        type_form = ClassTypeForm(data=request.POST)
+        if type_form.is_valid():
+            type_form.save()
+            return redirect('create_class')
+    else:
+        type_form = ClassTypeForm()
+    return render(request, 'session/class_type.html', {'type_form':type_form})
+
+
+# View for creating a new class
+@login_required
+def create_class(request):
+    types = ClassType.objects.all()
+    if request.method == 'POST':
+        form = SessionForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            new_class = form.save(commit=False)
+            new_class.tutor = request.user.profile  
+            new_class.save()
+            return redirect('dashboard_tutor')
+    else:
+        form = SessionForm()
+    return render(request, 'session/create_class.html', {'form': form, 'types':types})
+
+
 # Views for displaying the list of classes
 @login_required
 def class_list(request):
@@ -81,17 +109,6 @@ def class_detail_student(request, class_id):
     return render(request, 'session/class_detail_student.html', {'yoga_class_detail': yoga_class_detail, 'interactions':interactions, 'comment_form': comment_form,'logged_user':logged_user})
 
 
-# View for deleting a class
-@login_required
-def delete_class(request, class_id):
-    if request.method == 'POST':
-        yoga_class = YogaClass.objects.get(id=class_id)
-        yoga_class.delete()
-        return redirect('class_list_tutor')
-    else:
-        return render(request, 'session/class_delete_confirm.html', {'class_id': class_id})
-
-
 # View for editing a class
 @login_required
 def edit_class(request):
@@ -108,32 +125,15 @@ def edit_class(request):
     return render(request, 'session/edit_class.html', {'edit_form':edit_form, 'edit_class':edit_class})
 
 
-# View for adding a new class type
-def add_class_type(request):
-    if request.method == 'POST':
-        type_form = ClassTypeForm(data=request.POST)
-        if type_form.is_valid():
-            type_form.save()
-            return redirect('create_class')
-    else:
-        type_form = ClassTypeForm()
-    return render(request, 'session/class_type.html', {'type_form':type_form})
-
-
-# View for creating a new class
+# View for deleting a class
 @login_required
-def create_class(request):
-    types = ClassType.objects.all()
+def delete_class(request, class_id):
     if request.method == 'POST':
-        form = SessionForm(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            new_class = form.save(commit=False)
-            new_class.tutor = request.user.profile  
-            new_class.save()
-            return redirect('dashboard_tutor')
+        yoga_class = YogaClass.objects.get(id=class_id)
+        yoga_class.delete()
+        return redirect('class_list_tutor')
     else:
-        form = SessionForm()
-    return render(request, 'session/create_class.html', {'form': form, 'types':types})
+        return render(request, 'session/class_delete_confirm.html', {'class_id': class_id})
 
 
 # View for enrolling in a class

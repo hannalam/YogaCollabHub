@@ -1,26 +1,12 @@
-run later
-py -m pip freeze > requirements.txt
-Write some comment please
+YouTube Demo: https://youtu.be/DBUyBhcQ1Ww
+Github: https://github.com/hannalam/YogaCollabHub
+AWS: http://13.48.127.8:8000/
+
 
 # List of development environment:
 
 operating system: Window 11
-python version: Python 3.10.11
-
-Logging into django-admin:
-
-# super user
-
-username: user
-password: user1234
-
-# How to run the unit test:
-
-python manage.py test
-
-# Location of the data loading script
-
-yogacollabhub/db.sqlite3
+python version: Python 3.11.8
 
 # How to run this web
 
@@ -30,13 +16,23 @@ py -3 -m venv .venv
 pip install -r requirements.txt
 python manage.py runserver 127.0.0.1:8080
 
-# Reference of media used
+# Logging into django-admin:super user
 
-learn from: How to Build a Web Assistant Using Django and ChatGPT API in Python  
-https://thepythoncode.com/article/web-assistant-django-with-gpt3-api-python?utm_content=cmp-true
+username: user
+password: user1234
 
-certificate
-https://www.vinyasayogaashram.com/image/rys-200.jpg
+# Location of the data loading script
+
+yogacollabhub/db.sqlite3
+
+# How to run the unit test:
+
+python manage.py test
+python manage.py test users.tests
+python manage.py test session.tests
+python manage.py test interactions.tests
+python manage.py test enrollments.tests
+
 
 # Steps To Deploy on Amazon EC2
 
@@ -75,6 +71,10 @@ Createsuperuser
 Runserver
 
 `python3 manage.py runserver 0.0.0.0:8000`
+
+Enter the directory
+
+`cd YogaCollabHub`
 
 Reload the update on AWS
 

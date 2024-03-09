@@ -2,6 +2,7 @@ from django.db import models
 from users.models import Profile   # Import the Profile model from the 'users' app
 from session.models import YogaClass   # Import the YogaClass model from the 'session' app
 
+# Model for yoga class Enrollment
 class Enrollment(models.Model):
     student = models.ForeignKey(Profile, on_delete=models.CASCADE)   # ForeignKey relationship with the Profile model
     session = models.ForeignKey(YogaClass, on_delete=models.CASCADE)   # ForeignKey relationship with the YogaClass model

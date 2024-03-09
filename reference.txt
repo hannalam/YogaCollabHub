@@ -1,0 +1,13 @@
+Reference of media used:
+
+learn from: How to Build a Web Assistant Using Django and ChatGPT API in Python  
+https://thepythoncode.com/article/web-assistant-django-with-gpt3-api-python?utm_content=cmp-true
+
+certificate
+https://www.vinyasayogaashram.com/image/rys-200.jpg
+
+
+
+Remark for myself:
+
+py -m pip freeze > requirements.txt
